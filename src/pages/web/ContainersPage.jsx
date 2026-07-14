@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { containerSizes, legacyAssets } from "@/data/siteData";
 import { Badge, Card } from "@/components/ui";
+import { saveContactIntent } from "@/lib/contactIntent";
 import { PublicLayout } from "./PublicLayout";
 import { TestimonialsSection } from "./TestimonialsSection";
 
@@ -47,6 +48,7 @@ export function ContainersPage() {
                   {item.rate > 0 && (
                     <a
                       href={`/request-quote?container=${encodeURIComponent(item.label)}`}
+                      onClick={() => saveContactIntent("Containers")}
                       className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       Get quote

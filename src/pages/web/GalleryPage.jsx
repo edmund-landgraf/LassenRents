@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Grid3X3, ImageIcon, Search, X } from "lucide-react";
 import { Badge, Button, Card } from "@/components/ui";
+import { saveContactIntent } from "@/lib/contactIntent";
 import { PublicLayout } from "./PublicLayout";
 
 const categories = ["All", "Containers", "Delivery", "Trucking", "Options", "Slides", "Brand"];
@@ -68,7 +69,7 @@ function normalizeMedia(item) {
 
 export function GalleryPage() {
   const [photos, setPhotos] = useState([]);
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("Containers");
   const [query, setQuery] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
@@ -116,7 +117,9 @@ export function GalleryPage() {
           </div>
           {featuredPhoto && (
             <div className="overflow-hidden rounded-lg border border-border bg-card shadow-soft">
-              <img className="h-72 w-full object-cover" src={featuredPhoto.src} alt={featuredPhoto.title} />
+              <div className="flex h-72 items-center bg-white p-3">
+                <img className="max-h-full w-full object-contain" src={featuredPhoto.src} alt={featuredPhoto.title} />
+              </div>
               <div className="flex items-center justify-between gap-4 p-4">
                 <div>
                   <p className="text-sm font-semibold">{featuredPhoto.title}</p>
@@ -164,7 +167,7 @@ export function GalleryPage() {
               <Grid3X3 className="h-4 w-4" />
               {filteredPhotos.length} photos shown
             </div>
-            <a className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline" href="/request-quote">
+            <a className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline" href="/request-quote" onClick={() => saveContactIntent("Gallery")}>
               Request a quote <ArrowRight className="h-4 w-4" />
             </a>
           </div>
@@ -177,8 +180,13 @@ export function GalleryPage() {
                 type="button"
                 onClick={() => setSelectedPhoto(photo)}
               >
-                <div className="aspect-[4/3] overflow-hidden bg-muted">
-                  <img className="h-full w-full object-cover transition duration-300 group-hover:scale-105" src={photo.src} alt={photo.title} loading="lazy" />
+                <div className="flex aspect-[4/3] items-center overflow-hidden bg-white p-3">
+                  <img
+                    className="max-h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]"
+                    src={photo.src}
+                    alt={photo.title}
+                    loading="lazy"
+                  />
                 </div>
                 <div className="space-y-2 p-4">
                   <div className="flex items-start justify-between gap-3">

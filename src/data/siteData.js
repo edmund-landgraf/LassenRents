@@ -3,11 +3,107 @@ import { CalendarClock, Container, PackageCheck, Truck, Wrench } from "lucide-re
 export const legacyAssets = {
   header: "https://lassenrents.com/wp-content/uploads/2013/10/header.jpg",
   refrigerated: "https://lassenrents.com/wp-content/uploads/2018/05/refrigeratedcontainer960.png",
-  delivery: "https://lassenrents.com/wp-content/uploads/2013/10/deliveryblock-1024x271.jpg",
-  trucking: "https://lassenrents.com/wp-content/uploads/2018/03/truckingtop.png",
+  delivery: "/assets/delivery/deliveryblock.jpg",
+  trucking: "/assets/trucking/truckingtop.png",
   shelving: "https://lassenrents.com/wp-content/uploads/2013/10/shelving.jpg",
-  modifications: "https://lassenrents.com/wp-content/uploads/2013/10/office.jpg"
+  modifications: "/assets/modifications/office.jpg"
 };
+
+export const deliveryAssets = {
+  videoId: "Q9InSkMyBMM",
+  videoUrl: "https://www.youtube.com/embed/Q9InSkMyBMM",
+  hero: "/assets/delivery/deliveryblock.jpg",
+  bottom: "/assets/delivery/pinpointdeliverybottom.jpg",
+  longDay: "/assets/delivery/longday.png",
+  toughDelivery: "/assets/delivery/toughdelivery.png"
+};
+
+export const truckingAssets = [
+  {
+    title: "Trucking service",
+    image: "/assets/trucking/truckingtop.png",
+    summary: "Dedicated trucking support for containers, equipment, and local hauling needs."
+  },
+  {
+    title: "Relocating",
+    image: "/assets/trucking/relocating.png",
+    summary: "Move containers from one site to another when projects, yards, or jobsite plans change."
+  },
+  {
+    title: "Hay and material hauling",
+    image: "/assets/trucking/hay.png",
+    summary: "Support for agricultural hauling and bulk material movement around Northeastern California."
+  },
+  {
+    title: "Container transport",
+    image: "/assets/trucking/trucking3.png",
+    summary: "Haul loaded or empty storage containers with the right truck and route plan."
+  },
+  {
+    title: "Local hauling",
+    image: "/assets/trucking/trucking4.png",
+    summary: "Practical hauling service for customers who need more than a standard container dropoff."
+  },
+  {
+    title: "Jobsite support",
+    image: "/assets/trucking/trucking7.png",
+    summary: "Coordinate delivery, pickup, and movement for active commercial and rural sites."
+  },
+  {
+    title: "Equipment movement",
+    image: "/assets/trucking/trucking8.png",
+    summary: "Truck availability can be matched to the load, site access, and schedule."
+  },
+  {
+    title: "Regional service",
+    image: "/assets/trucking/trucking9.png",
+    summary: "Serving Lassen, Plumas, and Modoc Counties with local knowledge."
+  },
+  {
+    title: "Lassen Rents fleet",
+    image: "/assets/trucking/truckingbig.png",
+    summary: "A locally owned operation with prompt, friendly service and no hidden costs."
+  }
+];
+
+export const modificationOptions = [
+  {
+    label: "Air conditioning",
+    image: "/assets/modifications/airconditionerblock.jpg",
+    summary: "Add climate control for office, records, retail, and temperature-sensitive storage uses.",
+    details: ["Wall-mounted AC option", "Useful for office conversions", "Pairs well with doors and windows"]
+  },
+  {
+    label: "Personnel doors",
+    image: "/assets/modifications/doorblock.jpg",
+    summary: "Add walk-in access so the container works more like a shop, office, or frequent-use storage room.",
+    details: ["Easy daily access", "Commercial-style entry", "Can be placed for workflow"]
+  },
+  {
+    label: "Roll-up doors",
+    image: "/assets/modifications/rollupdoorblock.jpg",
+    summary: "Improve loading access for equipment, pallets, retail inventory, and jobsite materials.",
+    details: ["Wide loading access", "Good for frequent loading", "Helps segment storage zones"]
+  },
+  {
+    label: "Windows",
+    image: "/assets/modifications/windowsblock.jpg",
+    summary: "Bring light and visibility into a modified container for office or workspace use.",
+    details: ["Natural light", "Workspace visibility", "Pairs with office layouts"]
+  },
+  {
+    label: "Lockboxes",
+    image: "/assets/modifications/lockboxblock.jpg",
+    summary: "Protect padlocks and improve security for rented or purchased containers.",
+    details: ["Added lock protection", "Cleaner exterior security", "Useful for jobsites"]
+  },
+  {
+    label: "Vents and louvers",
+    image: "/assets/modifications/louverblock.jpg",
+    summary: "Add airflow for storage, workspace, or equipment needs.",
+    details: ["Louvered ventilation", "Airflow upgrades", "Can pair with whirly vents"]
+  }
+];
 
 export const containerSizes = [
   {
@@ -97,7 +193,7 @@ export const rentalContracts = [
     status: "Closed",
     balance: 0,
     deposit: 500,
-    pdfUrl: "/api/portal/rentals/rent-1048/agreement",
+    pdfUrl: "/api/portal/rentals/rent-1031/agreement",
     notes: "Closed rental. Deposit refunded after clean inspection."
   },
   {
@@ -110,7 +206,7 @@ export const rentalContracts = [
     status: "Closed",
     balance: 0,
     deposit: 250,
-    pdfUrl: "/api/portal/rentals/rent-1048/agreement",
+    pdfUrl: "/api/portal/rentals/rent-1018/agreement",
     notes: "Closed rental. No damages recorded."
   }
 ];
@@ -171,11 +267,61 @@ export const operations = {
     { id: "SVC-01", name: "Service Truck", status: "Service", lengths: [], highCube: false, driver: "Unassigned", nextService: "Jul 8", note: "Maintenance only" }
   ],
   calendarLayers: [
-    { date: "Jul 7", time: "8:30 AM", layer: "Dropoff", title: "Lassen High School", asset: "LR-40HC-203", truck: "T-20-01", tone: "success" },
-    { date: "Jul 7", time: "11:00 AM", layer: "Pickup", title: "Plumas Ag Supply", asset: "LR-20-091", truck: "T-40-02", tone: "warn" },
-    { date: "Jul 8", time: "9:00 AM", layer: "Maintenance", title: "Hydraulic service", asset: "SVC-01", truck: "SVC-01", tone: "danger" },
-    { date: "Jul 10", time: "All day", layer: "Due back", title: "Quincy retail", asset: "LR-20-091", truck: "-", tone: "warn" },
-    { date: "Jul 12", time: "1:30 PM", layer: "Committed", title: "County fair reserve", asset: "LR-20-122", truck: "T-HC-03", tone: "default" }
+    {
+      date: "Jul 7",
+      time: "8:30 AM",
+      layer: "Dropoff",
+      title: "Lassen College",
+      address: "478-200 Hwy 139, Susanville, CA 96130",
+      driverNote: "Check in near the main campus entrance before placing the unit.",
+      asset: "LR-40HC-203",
+      truck: "T-20-01",
+      tone: "success"
+    },
+    {
+      date: "Jul 7",
+      time: "11:00 AM",
+      layer: "Pickup",
+      title: "Banner Lassen Medical Center",
+      address: "1800 Spring Ridge Dr, Susanville, CA 96130",
+      driverNote: "Call site contact before entering the service access lane.",
+      asset: "LR-20-091",
+      truck: "T-40-02",
+      tone: "warn"
+    },
+    {
+      date: "Jul 8",
+      time: "9:00 AM",
+      layer: "Maintenance",
+      title: "Historic Lassen County Courthouse",
+      address: "220 S Lassen St, Susanville, CA",
+      driverNote: "Service truck only. Park clear of courthouse access points.",
+      asset: "SVC-01",
+      truck: "SVC-01",
+      tone: "danger"
+    },
+    {
+      date: "Jul 10",
+      time: "All day",
+      layer: "Due back",
+      title: "High Desert State Prison staging",
+      address: "475-750 Rice Canyon Rd, Susanville, CA",
+      driverNote: "Confirm security access before dispatching a pickup truck.",
+      asset: "LR-20-091",
+      truck: "-",
+      tone: "warn"
+    },
+    {
+      date: "Jul 12",
+      time: "1:30 PM",
+      layer: "Committed",
+      title: "California Correctional Center staging",
+      address: "711-045 Center Rd, Susanville, CA 96127",
+      driverNote: "Reserved placement window. Match truck capability before assigning.",
+      asset: "LR-20-122",
+      truck: "T-HC-03",
+      tone: "default"
+    }
   ],
   taxExport: {
     period: "2026 Q3",
@@ -195,5 +341,178 @@ export const operations = {
     { container: "LR-REF-006", issue: "Refrigeration compressor inspection", age: "2 days" },
     { container: "LR-40HC-022", issue: "Door gasket and lockbox repair", age: "5 days" },
     { container: "Truck T-02", issue: "Hydraulic service due", age: "Tomorrow" }
+  ]
+};
+
+export const demoWorkflow = {
+  quoteLeads: [
+    {
+      id: "Q-260714-01",
+      receivedAt: "Today, 8:42 AM",
+      name: "Diana Ortiz",
+      company: "Honey Lake Ag Supply",
+      phone: "530-257-4410",
+      email: "diana@honeylake.example",
+      address: "Johnstonville Rd, Susanville, CA",
+      interests: ["Containers", "Delivery"],
+      container: "40 ft High Cube",
+      date: "2026-07-18",
+      duration: "6+ months",
+      notes: "Needs dry storage near loading bay. Gravel pad, wide gate, weekday delivery preferred.",
+      status: "New",
+      fit: "Match found"
+    },
+    {
+      id: "Q-260714-02",
+      receivedAt: "Today, 9:15 AM",
+      name: "Marcus Lee",
+      company: "Plumas Builders",
+      phone: "530-283-1184",
+      email: "marcus@plumasbuilders.example",
+      address: "Main St, Quincy, CA",
+      interests: ["Containers", "Modifications"],
+      container: "20 ft",
+      date: "2026-07-21",
+      duration: "3-months",
+      notes: "Wants lockbox and shelves for jobsite tools.",
+      status: "Review",
+      fit: "Needs pricing"
+    },
+    {
+      id: "Q-260713-04",
+      receivedAt: "Yesterday, 3:50 PM",
+      name: "Shannon Rivera",
+      company: "Modoc Fairgrounds",
+      phone: "530-233-0920",
+      email: "shannon@modocfair.example",
+      address: "Alturas, CA",
+      interests: ["Trucking", "Containers"],
+      container: "20 ft High Cube",
+      date: "2026-07-24",
+      duration: "1-month",
+      notes: "Temporary overflow during event setup. Tight placement near livestock barns.",
+      status: "Quoted",
+      fit: "Truck match"
+    }
+  ],
+  customers: [
+    {
+      id: "cust-1001",
+      name: "Mallery Construction",
+      contact: "Pat Mallery",
+      phone: "530-257-3865",
+      email: "accounts@mallery.example",
+      balance: 642,
+      rentals: 1,
+      status: "Active",
+      lastTouch: "Payment reminder sent today",
+      notes: "Prefers text confirmation before dispatch. Gravel driveway is accessible for high-cube placement."
+    },
+    {
+      id: "cust-1002",
+      name: "Plumas Ag Supply",
+      contact: "Emily Park",
+      phone: "530-283-4118",
+      email: "emily@plumasag.example",
+      balance: 0,
+      rentals: 2,
+      status: "Active",
+      lastTouch: "Pickup scheduled Jul 16",
+      notes: "Seasonal renter. Usually needs 40 ft units from March through June."
+    },
+    {
+      id: "cust-1003",
+      name: "Lassen High School",
+      contact: "Robert Gaines",
+      phone: "530-257-2141",
+      email: "facilities@lassenhigh.example",
+      balance: 225,
+      rentals: 1,
+      status: "Active",
+      lastTouch: "Container committed for Jul 18",
+      notes: "Requires school access window and placement clear of student pathways."
+    }
+  ],
+  rentalWizard: {
+    customer: "Honey Lake Ag Supply",
+    container: "40 ft High Cube",
+    matchedUnit: "LR-40HC-203",
+    truck: "Landoll High Cube",
+    startDate: "2026-07-18",
+    monthlyRate: 255,
+    deliveryFee: 175,
+    pickupFee: 175,
+    deposit: 500,
+    steps: ["Customer", "Availability", "Terms", "Agreement"]
+  },
+  dispatchBoard: [
+    {
+      id: "JOB-771",
+      lane: "Unassigned",
+      type: "Dropoff",
+      customer: "Honey Lake Ag Supply",
+      container: "LR-40HC-203",
+      truck: "Needs high-cube truck",
+      driver: "Unassigned",
+      time: "Jul 18, 9:00 AM",
+      address: "Johnstonville Rd, Susanville, CA",
+      note: "Wide gravel pad. Call Diana before arrival."
+    },
+    {
+      id: "JOB-768",
+      lane: "Assigned",
+      type: "Pickup",
+      customer: "Plumas Ag Supply",
+      container: "LR-20-091",
+      truck: "Rollback 40",
+      driver: "Mason",
+      time: "Jul 16, 11:00 AM",
+      address: "Quincy, CA",
+      note: "Customer says container is empty and unlocked."
+    },
+    {
+      id: "JOB-766",
+      lane: "In Route",
+      type: "Service",
+      customer: "Mallery Construction",
+      container: "LR-20HC-118",
+      truck: "Service Truck",
+      driver: "Terry",
+      time: "Today, 2:00 PM",
+      address: "705-120 Johnstonville Rd, Susanville, CA",
+      note: "Inspect door seal and photograph condition."
+    },
+    {
+      id: "JOB-761",
+      lane: "Complete",
+      type: "Dropoff",
+      customer: "Lassen High School",
+      container: "LR-20-122",
+      truck: "Landoll High Cube",
+      driver: "Ray",
+      time: "Today, 8:30 AM",
+      address: "Susanville, CA",
+      note: "Placed behind maintenance building."
+    }
+  ],
+  invoices: [
+    { id: "INV-2307", customer: "Mallery Construction", due: "2026-07-15", amount: 642, status: "Open", age: "Due tomorrow" },
+    { id: "INV-2311", customer: "Lassen High School", due: "2026-07-18", amount: 225, status: "Sent", age: "Due in 4 days" },
+    { id: "INV-2298", customer: "Modoc County", due: "2026-07-01", amount: 390, status: "Past due", age: "13 days late" },
+    { id: "INV-2291", customer: "Plumas Ag Supply", due: "2026-06-28", amount: 0, status: "Paid", age: "Paid Jul 2" }
+  ],
+  inspections: [
+    "Confirm container is empty and accessible",
+    "Photograph all four sides before loading",
+    "Check doors, gasket, roof line, lockbox, and floor",
+    "Record placement or pickup condition",
+    "Collect customer signature when required"
+  ],
+  activity: [
+    { time: "9:42 AM", type: "Lead", text: "Honey Lake Ag Supply requested a 40 ft High Cube quote." },
+    { time: "9:50 AM", type: "Match", text: "LR-40HC-203 and Landoll High Cube matched for Jul 18 delivery." },
+    { time: "10:05 AM", type: "Invoice", text: "Invoice INV-2307 remains open for Mallery Construction." },
+    { time: "11:15 AM", type: "Dispatch", text: "Pickup JOB-768 assigned to Mason and Rollback 40." },
+    { time: "2:00 PM", type: "Inspection", text: "Service checklist ready for LR-20HC-118." }
   ]
 };

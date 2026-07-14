@@ -1,6 +1,7 @@
 import { ArrowRight, Check, CreditCard, ShieldCheck } from "lucide-react";
-import { Badge, Button, Card } from "@/components/ui";
+import { Badge, Card } from "@/components/ui";
 import { legacyAssets } from "@/data/siteData";
+import { saveContactIntent } from "@/lib/contactIntent";
 import { PublicLayout } from "./PublicLayout";
 
 function Hero() {
@@ -14,10 +15,14 @@ function Hero() {
             Onsite storage container rental, sales, pinpoint delivery, modifications, and trucking from a locally owned Susanville operator.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button className="h-12 px-5">
+            <a
+              href="/request-quote"
+              onClick={() => saveContactIntent("Containers")}
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
               Request a container
               <ArrowRight className="h-4 w-4" />
-            </Button>
+            </a>
             <a
               href="/portal/login"
               className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-border bg-background px-5 text-sm font-semibold text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"

@@ -1,9 +1,13 @@
-import { ArrowRight, Bike, Boxes, CheckCircle2, ClipboardList, FileBox, Hammer, Wrench } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Bike, Boxes, CheckCircle2, ClipboardList, Settings2 } from "lucide-react";
 import { Card } from "@/components/ui";
-import { legacyAssets } from "@/data/siteData";
+import { legacyAssets, modificationOptions } from "@/data/siteData";
+import { saveContactIntent } from "@/lib/contactIntent";
 import { PublicLayout } from "./PublicLayout";
 
 export function OptionsPage() {
+  const [selectedModification, setSelectedModification] = useState(modificationOptions[0]);
+
   const accessorySections = [
     {
       title: "Shelving",
@@ -51,13 +55,6 @@ export function OptionsPage() {
     }
   ];
 
-  const modifications = [
-    { label: "Personnel doors", icon: Hammer },
-    { label: "Roll-up doors", icon: Wrench },
-    { label: "Windows and louvers", icon: FileBox },
-    { label: "Lockboxes, vents, and AC", icon: CheckCircle2 }
-  ];
-
   return (
     <PublicLayout>
       <section className="border-b border-border bg-muted/45 py-14">
@@ -69,6 +66,14 @@ export function OptionsPage() {
               <p className="mt-4 max-w-2xl text-muted-foreground">
                 Add shelves, racks, brackets, and container modifications so the rental works like a small warehouse instead of a big empty box.
               </p>
+              <a
+                href="/request-quote"
+                onClick={() => saveContactIntent("Accessories")}
+                className="mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                Ask about accessories
+                <ArrowRight className="h-4 w-4" />
+              </a>
             </div>
             <img className="h-72 w-full rounded-lg border border-border object-cover shadow-soft" src={legacyAssets.modifications} alt="Modified storage container office interior" />
           </div>
@@ -107,32 +112,78 @@ export function OptionsPage() {
             </Card>
           ))}
 
-          <Card className="p-6 md:p-8">
-            <div className="grid gap-6 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+          <section className="space-y-5 pt-4">
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-primary">Container modifications</p>
-                <h2 className="mt-2 text-2xl font-bold">Make the container fit the job</h2>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  Lassen Rents can pair organization accessories with practical modifications such as doors, windows, louvers, lockboxes, roll-up doors, vents, air conditioning, and office-style conversions.
+                <h2 className="mt-2 text-3xl font-bold">Six ways to make the container fit the job</h2>
+                <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
+                  Every shipping container can be custom engineered and modified to suit your needs. The variations and uses are endless.
                 </p>
-                <a
-                  href="/request-quote"
-                  className="mt-5 inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  Ask about accessories
-                  <ArrowRight className="h-4 w-4" />
-                </a>
               </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {modifications.map((item) => (
-                  <div key={item.label} className="flex items-center gap-3 rounded-md border border-border bg-muted/45 p-4">
-                    <item.icon className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-semibold">{item.label}</span>
-                  </div>
-                ))}
-              </div>
+              <a
+                href="/request-quote"
+                onClick={() => saveContactIntent("Modifications")}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                Ask about modifications
+                <ArrowRight className="h-4 w-4" />
+              </a>
             </div>
-          </Card>
+
+            <Card className="overflow-hidden">
+              <div className="grid gap-0 lg:grid-cols-[1.1fr_.9fr]">
+                <div className="flex min-h-[260px] items-center bg-white p-4 sm:min-h-[300px]">
+                  <img
+                    className="max-h-[360px] w-full object-contain"
+                    src={selectedModification.image}
+                    alt={`${selectedModification.label} container modification`}
+                  />
+                </div>
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-md bg-primary/10 text-primary">
+                      <Settings2 className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-primary">Selected modification</p>
+                      <h3 className="text-2xl font-bold">{selectedModification.label}</h3>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-muted-foreground">{selectedModification.summary}</p>
+                  <div className="mt-6 space-y-3">
+                    {selectedModification.details.map((detail) => (
+                      <p key={detail} className="flex items-start gap-2 text-sm leading-6">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        {detail}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {modificationOptions.map((item) => (
+                <button
+                  key={item.label}
+                  type="button"
+                  className={`overflow-hidden rounded-lg border bg-card text-left shadow-soft transition hover:-translate-y-0.5 hover:shadow-lg ${
+                    selectedModification.label === item.label ? "border-primary ring-2 ring-primary/20" : "border-border"
+                  }`}
+                  onClick={() => setSelectedModification(item)}
+                >
+                  <div className="flex aspect-[16/5] items-center bg-white p-2">
+                    <img className="h-full w-full object-contain" src={item.image} alt={`${item.label} modification`} />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold">{item.label}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.summary}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
         </div>
       </section>
     </PublicLayout>

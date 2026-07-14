@@ -21,22 +21,22 @@ export function PortalContractsPage() {
         <p className="mt-3 max-w-2xl text-sm leading-6 text-white/60">Select a contract row to view details and preview the agreement PDF.</p>
       </div>
 
-      <section className="mt-8 grid gap-5 lg:grid-cols-[.95fr_1.05fr]">
-        <Card className="border-white/10 bg-white p-0 text-slate-950">
+      <section className="mt-8 grid min-w-0 gap-5 lg:grid-cols-[minmax(0,.95fr)_minmax(0,1.05fr)]">
+        <Card className="min-w-0 border-white/10 bg-white p-0 text-slate-950">
           <div className="border-b border-border p-5">
             <h2 className="font-semibold">Contract list</h2>
             <p className="mt-1 text-sm text-muted-foreground">Scrollable mini grid of agreements.</p>
           </div>
-          <div className="max-h-[520px] overflow-auto">
-            <table className="w-full min-w-[720px] text-left text-sm">
+          <div className="max-h-[520px] overflow-y-auto">
+            <table className="w-full table-fixed text-left text-sm">
               <thead className="sticky top-0 bg-muted text-xs uppercase tracking-wide text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3">Agreement</th>
-                  <th className="px-4 py-3">Container</th>
-                  <th className="px-4 py-3">Start</th>
-                  <th className="px-4 py-3">Due back</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3 text-right">Balance</th>
+                  <th className="w-[18%] px-3 py-3">Agreement</th>
+                  <th className="w-[20%] px-3 py-3">Container</th>
+                  <th className="w-[16%] px-3 py-3">Start</th>
+                  <th className="w-[16%] px-3 py-3">Due</th>
+                  <th className="w-[15%] px-3 py-3">Status</th>
+                  <th className="w-[15%] px-3 py-3 text-right">Balance</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
@@ -46,14 +46,14 @@ export function PortalContractsPage() {
                     className={`cursor-pointer transition hover:bg-muted/60 ${selectedContract?.id === contract.id ? "bg-emerald-50" : ""}`}
                     onClick={() => setSelectedContractId(contract.id)}
                   >
-                    <td className="px-4 py-4 font-semibold">{contract.agreementNumber}</td>
-                    <td className="px-4 py-4">{contract.container}</td>
-                    <td className="px-4 py-4">{contract.start}</td>
-                    <td className="px-4 py-4">{contract.dueBack}</td>
-                    <td className="px-4 py-4">
+                    <td className="px-3 py-4 font-semibold">{contract.agreementNumber}</td>
+                    <td className="px-3 py-4 leading-5">{contract.container}</td>
+                    <td className="px-3 py-4 leading-5">{contract.start}</td>
+                    <td className="px-3 py-4 leading-5">{contract.dueBack}</td>
+                    <td className="px-3 py-4">
                       <Badge tone={contract.status === "Current" ? "success" : "default"}>{contract.status}</Badge>
                     </td>
-                    <td className="px-4 py-4 text-right font-semibold">${contract.balance}</td>
+                    <td className="px-3 py-4 text-right font-semibold">${contract.balance}</td>
                   </tr>
                 ))}
               </tbody>
@@ -62,7 +62,7 @@ export function PortalContractsPage() {
         </Card>
 
         {selectedContract && (
-          <Card className="border-white/10 bg-white/8 p-5 text-white">
+          <Card className="min-w-0 border-white/10 bg-white/8 p-5 text-white">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-sm text-white/60">Selected contract</p>
@@ -94,9 +94,13 @@ export function PortalContractsPage() {
             </p>
             <p className="mt-3 text-sm leading-6 text-white/65">{selectedContract.notes}</p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <a href={selectedContract.pdfUrl} download={`${selectedContract.agreementNumber}-container-rental-agreement.pdf`} className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-white px-4 text-sm font-semibold text-slate-950 transition hover:bg-white/90">
+              <a href={`${selectedContract.pdfUrl}?download=1`} download={`${selectedContract.agreementNumber}-container-rental-agreement.pdf`} className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-white px-4 text-sm font-semibold text-slate-950 transition hover:bg-white/90">
                 <Download className="h-4 w-4" />
                 Download PDF
+              </a>
+              <a href={selectedContract.pdfUrl} target="_blank" rel="noreferrer" className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-white/15 px-4 text-sm font-semibold text-white transition hover:bg-white/10">
+                <FileText className="h-4 w-4" />
+                Open PDF
               </a>
             </div>
             <div className="mt-5 overflow-hidden rounded-lg border border-white/10 bg-slate-950">
@@ -104,7 +108,57 @@ export function PortalContractsPage() {
                 <FileText className="h-4 w-4 text-emerald-300" />
                 Agreement preview
               </div>
-              <iframe className="h-[520px] w-full bg-white" src={selectedContract.pdfUrl} title={`${selectedContract.agreementNumber} agreement preview`} />
+              <div className="max-h-[520px] overflow-y-auto bg-white p-6 text-slate-950">
+                <div className="mx-auto max-w-[680px] rounded-md border border-slate-200 bg-white p-6 text-xs leading-5 shadow-sm">
+                  <p className="font-bold">Lassen Rents, Inc. - Sample Storage Container Rental Agreement</p>
+                  <div className="mt-4 grid gap-1">
+                    <p>
+                      <span className="font-semibold">Agreement No:</span> {selectedContract.agreementNumber}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Customer:</span> Mallery Construction
+                    </p>
+                    <p>
+                      <span className="font-semibold">Site Address:</span> {selectedContract.address}
+                    </p>
+                  </div>
+                  <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <p className="font-bold">Container</p>
+                      <p>Unit: {selectedContract.id.replace("rent-", "LR-").toUpperCase()}</p>
+                      <p>Size: {selectedContract.container}</p>
+                      <p>Condition at delivery: Good</p>
+                    </div>
+                    <div>
+                      <p className="font-bold">Rental Terms</p>
+                      <p>Start date: {selectedContract.start}</p>
+                      <p>Due back: {selectedContract.dueBack}</p>
+                      <p>Deposit: ${selectedContract.deposit}</p>
+                    </div>
+                  </div>
+                  <div className="mt-5">
+                    <p className="font-bold">Customer Responsibilities</p>
+                    <ol className="mt-2 list-decimal space-y-1 pl-4">
+                      <li>Keep the container locked and secure.</li>
+                      <li>Do not move the container without written approval.</li>
+                      <li>Keep the container accessible for pickup or service.</li>
+                      <li>Do not store hazardous, illegal, explosive, or flammable materials.</li>
+                    </ol>
+                  </div>
+                  <div className="mt-5">
+                    <p className="font-bold">Payment and Return</p>
+                    <p className="mt-2">
+                      Monthly rent, delivery, pickup, deposits, taxes, and fees are due as invoiced. Final charges may
+                      include unpaid rent, pickup, repair, cleaning, or adjustment items.
+                    </p>
+                  </div>
+                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    <p>Customer Signature: ____________________</p>
+                    <p>Lassen Rents Signature: ________________</p>
+                  </div>
+                  <p className="mt-6 text-[11px] text-slate-500">Preview only. Use Open PDF or Download PDF for the generated contract document.</p>
+                </div>
+              </div>
             </div>
           </Card>
         )}

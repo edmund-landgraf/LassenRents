@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo Mode Guide | Lassen Rents Help</title>
+    <link rel="stylesheet" href="/help/help.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="/help">Lassen Rents Help</a>
+        <nav><a href="/">Website</a><a href="/admin">Admin</a></nav>
+      </header>
+      <section class="hero">
+        <p class="eyebrow">Prototype notes</p>
+        <h1>Demo mode guide</h1>
+        <p class="lede">The prototype is intentionally mixed: React pages, Express API stubs, static JSON files, static help pages, and browser-stored demo state.</p>
+      </section>
+      <article class="article">
+        <section>
+          <h2>What is real in the demo</h2>
+          <ol class="steps">
+            <li>Express serves API stubs, PDF contract previews, file-backed inventory, trucks, work orders, and this help section.</li>
+            <li>React handles the public site, portal, admin backend, and interactive demo workflows.</li>
+            <li>Static JSON files in <code>public/data</code> seed inventory, truck, and work-order screens.</li>
+            <li>Browser local storage keeps test login state and submitted quote leads.</li>
+            <li>Payments, email sending, and accounting export are visible demo states, not production integrations.</li>
+          </ol>
+        </section>
+        <p class="note">For local development, Vite proxies <code>/api</code> and <code>/help</code> to Express so the app and help pages share the same localhost origin.</p>
+      </article>
+      <footer class="footer"><a href="/help">Back to Help Center</a></footer>
+    </main>
+  </body>
+</html>

@@ -83,6 +83,44 @@ export const rentals = [
     depositAmount: 150,
     termsAcceptedAt: "2026-06-10T09:00:00.000Z",
     agreementPdfUrl: "/api/portal/rentals/rent-1062/agreement"
+  },
+  {
+    id: "rent-1031",
+    agreementNumber: "RA-1031",
+    customerId: "cust-1001",
+    containerId: "cont-044",
+    sizeId: "size-40",
+    status: "closed",
+    siteAddress: "Quincy retail overflow, Quincy, CA",
+    startDate: "2026-01-12",
+    dueBackDate: "2026-04-15",
+    returnedAt: "2026-04-15T17:15:00.000Z",
+    rentalRate: 225,
+    rateUnit: "monthly",
+    deliveryFee: 175,
+    pickupFee: 175,
+    depositAmount: 500,
+    termsAcceptedAt: "2026-01-12T10:15:00.000Z",
+    agreementPdfUrl: "/api/portal/rentals/rent-1031/agreement"
+  },
+  {
+    id: "rent-1018",
+    agreementNumber: "RA-1018",
+    customerId: "cust-1001",
+    containerId: "cont-091",
+    sizeId: "size-20",
+    status: "closed",
+    siteAddress: "Modoc County fair storage, Alturas, CA",
+    startDate: "2025-09-08",
+    dueBackDate: "2025-12-08",
+    returnedAt: "2025-12-08T16:45:00.000Z",
+    rentalRate: 145,
+    rateUnit: "monthly",
+    deliveryFee: 150,
+    pickupFee: 150,
+    depositAmount: 250,
+    termsAcceptedAt: "2025-09-08T13:20:00.000Z",
+    agreementPdfUrl: "/api/portal/rentals/rent-1018/agreement"
   }
 ];
 

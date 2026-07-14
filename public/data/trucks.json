@@ -1,0 +1,42 @@
+[
+  {
+    "id": "T-20-01",
+    "name": "Tilt Trailer 20",
+    "status": "Available",
+    "lengths": ["20 ft"],
+    "highCube": true,
+    "driver": "Ray",
+    "nextService": "2026-08-15",
+    "note": "Tight placement jobs"
+  },
+  {
+    "id": "T-40-02",
+    "name": "Rollback 40",
+    "status": "Assigned",
+    "lengths": ["20 ft", "40 ft"],
+    "highCube": false,
+    "driver": "Mason",
+    "nextService": "2026-07-20",
+    "note": "Standard-height 40 ft moves"
+  },
+  {
+    "id": "T-HC-03",
+    "name": "Landoll High Cube",
+    "status": "Available",
+    "lengths": ["20 ft", "40 ft"],
+    "highCube": true,
+    "driver": "Terry",
+    "nextService": "2026-09-01",
+    "note": "Handles high-cube containers"
+  },
+  {
+    "id": "SVC-01",
+    "name": "Service Truck",
+    "status": "Service",
+    "lengths": [],
+    "highCube": false,
+    "driver": "Unassigned",
+    "nextService": "2026-07-08",
+    "note": "Maintenance only"
+  }
+]

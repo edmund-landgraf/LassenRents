@@ -4,7 +4,8 @@ import { Button, Card } from "@/components/ui";
 export function AdminLoginPage() {
   function loginAsTestAdmin() {
     window.localStorage.setItem("lassen.admin.auth", "test-admin");
-    window.location.assign("/admin");
+    const nextPath = new URLSearchParams(window.location.search).get("next");
+    window.location.assign(nextPath?.startsWith("/admin") ? nextPath : "/admin");
   }
 
   return (

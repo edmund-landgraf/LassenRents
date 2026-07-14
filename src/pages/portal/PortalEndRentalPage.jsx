@@ -76,8 +76,8 @@ export function PortalEndRentalPage() {
         <h1 className="mt-2 text-3xl font-bold">Schedule pickup and close rental</h1>
       </div>
 
-      <section className="mt-8 grid gap-5 lg:grid-cols-[.95fr_1.05fr]">
-        <Card className="border-white/10 bg-white p-0 text-slate-950">
+      <section className="mt-8 grid min-w-0 gap-5 lg:grid-cols-[minmax(0,.95fr)_minmax(0,1.05fr)]">
+        <Card className="min-w-0 border-white/10 bg-white p-0 text-slate-950">
           <div className="border-b border-border p-5">
             <p className="text-sm text-muted-foreground">Pickup request</p>
             <h2 className="mt-1 text-xl font-semibold">Request to end rental and schedule pickup</h2>
@@ -113,7 +113,7 @@ export function PortalEndRentalPage() {
           </form>
         </Card>
 
-        <Card className="border-white/10 bg-white/8 p-5 text-white">
+        <Card className="min-w-0 border-white/10 bg-white/8 p-5 text-white">
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-sm text-white/65">Workflow</p>

@@ -1,7 +1,14 @@
 import { AdminPage } from "@/pages/admin/AdminPage";
+import { AdminActivityPage } from "@/pages/admin/AdminActivityPage";
 import { AdminCalendarPage } from "@/pages/admin/AdminCalendarPage";
+import { AdminCustomersPage } from "@/pages/admin/AdminCustomersPage";
+import { AdminDispatchPage } from "@/pages/admin/AdminDispatchPage";
+import { AdminInspectionPage } from "@/pages/admin/AdminInspectionPage";
 import { AdminInventoryPage } from "@/pages/admin/AdminInventoryPage";
+import { AdminInvoicesPage } from "@/pages/admin/AdminInvoicesPage";
+import { AdminLeadsPage } from "@/pages/admin/AdminLeadsPage";
 import { AdminLoginPage } from "@/pages/admin/AdminLoginPage";
+import { AdminRentalWizardPage } from "@/pages/admin/AdminRentalWizardPage";
 import { AdminTaxExportPage } from "@/pages/admin/AdminTaxExportPage";
 import { AdminTruckPage } from "@/pages/admin/AdminTruckPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
@@ -35,6 +42,13 @@ export default function App() {
   if (path === "/portal/end-rental") return <PortalEndRentalPage />;
   if (path === "/admin/login") return <AdminLoginPage />;
   if (path === "/admin") return <AdminPage />;
+  if (path === "/admin/leads") return <AdminLeadsPage />;
+  if (path === "/admin/customers") return <AdminCustomersPage />;
+  if (path === "/admin/rentals/new") return <AdminRentalWizardPage />;
+  if (path === "/admin/dispatch") return <AdminDispatchPage />;
+  if (path === "/admin/invoices") return <AdminInvoicesPage />;
+  if (path === "/admin/inspection") return <AdminInspectionPage />;
+  if (path === "/admin/activity") return <AdminActivityPage />;
   if (path === "/admin/inventory") return <AdminInventoryPage />;
   if (path === "/admin/trucks") return <AdminTruckPage />;
   if (path === "/admin/calendar") return <AdminCalendarPage />;

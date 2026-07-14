@@ -32,7 +32,7 @@ export function PortalShell({ children }) {
             Log out
           </Button>
         </header>
-        <nav className="mb-8 flex gap-2 overflow-x-auto rounded-lg border border-white/10 bg-white/5 p-2">
+        <nav className="mb-8 flex flex-wrap gap-2 rounded-lg border border-white/10 bg-white/5 p-2">
           {nav.map((item) => (
             <a
               key={item.href}

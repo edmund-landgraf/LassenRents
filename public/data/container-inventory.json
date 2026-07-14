@@ -1,0 +1,74 @@
+[
+  {
+    "id": "LR-20HC-118",
+    "length": "20 ft",
+    "highCube": true,
+    "status": "Rented",
+    "location": "Susanville jobsite",
+    "customer": "Mallery Construction",
+    "due": "Aug 3",
+    "bookValue": 4100,
+    "monthlyDepreciation": 68,
+    "utilization": "91%"
+  },
+  {
+    "id": "LR-40-044",
+    "length": "40 ft",
+    "highCube": false,
+    "status": "Available",
+    "location": "Yard A",
+    "customer": "-",
+    "due": "-",
+    "bookValue": 5200,
+    "monthlyDepreciation": 87,
+    "utilization": "66%"
+  },
+  {
+    "id": "LR-20-091",
+    "length": "20 ft",
+    "highCube": false,
+    "status": "Due back",
+    "location": "Quincy retail",
+    "customer": "Plumas Ag Supply",
+    "due": "Jul 10",
+    "bookValue": 3300,
+    "monthlyDepreciation": 55,
+    "utilization": "84%"
+  },
+  {
+    "id": "LR-40HC-203",
+    "length": "40 ft",
+    "highCube": true,
+    "status": "Committed",
+    "location": "Yard B",
+    "customer": "Lassen High School",
+    "due": "Dropoff Jul 12",
+    "bookValue": 6100,
+    "monthlyDepreciation": 102,
+    "utilization": "72%"
+  },
+  {
+    "id": "LR-REF-006",
+    "length": "40 ft",
+    "highCube": true,
+    "status": "Maintenance",
+    "location": "Shop",
+    "customer": "-",
+    "due": "Compressor inspection",
+    "bookValue": 14200,
+    "monthlyDepreciation": 237,
+    "utilization": "58%"
+  },
+  {
+    "id": "LR-20-122",
+    "length": "20 ft",
+    "highCube": false,
+    "status": "Hold",
+    "location": "Yard A",
+    "customer": "County fair",
+    "due": "Reserved Jul 18",
+    "bookValue": 3600,
+    "monthlyDepreciation": 60,
+    "utilization": "49%"
+  }
+]

@@ -1,5 +1,7 @@
 import cors from "cors";
 import express from "express";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 import {
   containerSizes,
   containers,
@@ -18,15 +20,100 @@ import {
 
 const app = express();
 const port = process.env.PORT || 5174;
+const inventoryFilePath = path.join(process.cwd(), "public", "data", "container-inventory.json");
+const workOrdersFilePath = path.join(process.cwd(), "public", "data", "work-orders.json");
+const trucksFilePath = path.join(process.cwd(), "public", "data", "trucks.json");
+const helpPath = path.join(process.cwd(), "server", "help");
 
 app.use(cors());
 app.use(express.json());
+app.use("/help", express.static(helpPath, { extensions: ["html"] }));
 
 const byId = (items, id) => items.find((item) => item.id === id);
 const currentCustomerId = "cust-1001";
 
 function notFound(res, label) {
   return res.status(404).json({ error: `${label} not found` });
+}
+
+async function readContainerInventoryFile() {
+  const contents = await readFile(inventoryFilePath, "utf8");
+  return JSON.parse(contents);
+}
+
+async function writeContainerInventoryFile(items) {
+  await mkdir(path.dirname(inventoryFilePath), { recursive: true });
+  await writeFile(inventoryFilePath, `${JSON.stringify(items, null, 2)}\n`, "utf8");
+}
+
+function normalizeInventoryItem(body) {
+  const length = body.length === "40 ft" ? "40 ft" : "20 ft";
+  const status = body.status || "Available";
+  const id = String(body.id || `LR-${length.replace(/\D/g, "")}${body.highCube ? "HC" : ""}-${Date.now().toString().slice(-4)}`).trim();
+  const utilization = String(body.utilization || "0%").trim();
+
+  return {
+    id,
+    length,
+    highCube: Boolean(body.highCube),
+    status,
+    location: String(body.location || "Yard A").trim(),
+    customer: String(body.customer || "-").trim(),
+    due: String(body.due || "-").trim(),
+    bookValue: Number(body.bookValue) || 0,
+    monthlyDepreciation: Number(body.monthlyDepreciation) || 0,
+    utilization: utilization.endsWith("%") ? utilization : `${utilization}%`
+  };
+}
+
+async function readWorkOrdersFile() {
+  const contents = await readFile(workOrdersFilePath, "utf8");
+  return JSON.parse(contents);
+}
+
+async function writeWorkOrdersFile(items) {
+  await mkdir(path.dirname(workOrdersFilePath), { recursive: true });
+  await writeFile(workOrdersFilePath, `${JSON.stringify(items, null, 2)}\n`, "utf8");
+}
+
+function normalizeWorkOrder(body) {
+  return {
+    id: String(body.id || `WO-${Date.now().toString().slice(-6)}`).trim(),
+    container: String(body.container || "Unassigned").trim(),
+    type: String(body.type || "Maintenance").trim(),
+    issue: String(body.issue || "General work order").trim(),
+    priority: String(body.priority || "Medium").trim(),
+    status: String(body.status || "Open").trim(),
+    assignedTo: String(body.assignedTo || "Unassigned").trim(),
+    dueDate: String(body.dueDate || "").trim(),
+    notes: String(body.notes || "").trim(),
+    createdAt: body.createdAt || new Date().toISOString()
+  };
+}
+
+async function readTrucksFile() {
+  const contents = await readFile(trucksFilePath, "utf8");
+  return JSON.parse(contents);
+}
+
+async function writeTrucksFile(items) {
+  await mkdir(path.dirname(trucksFilePath), { recursive: true });
+  await writeFile(trucksFilePath, `${JSON.stringify(items, null, 2)}\n`, "utf8");
+}
+
+function normalizeTruck(body) {
+  const lengths = Array.isArray(body.lengths) ? body.lengths.filter(Boolean) : [];
+
+  return {
+    id: String(body.id || `T-${Date.now().toString().slice(-5)}`).trim(),
+    name: String(body.name || "New truck").trim(),
+    status: String(body.status || "Available").trim(),
+    lengths,
+    highCube: Boolean(body.highCube),
+    driver: String(body.driver || "Unassigned").trim(),
+    nextService: String(body.nextService || "").trim(),
+    note: String(body.note || "").trim()
+  };
 }
 
 function decorateRental(rental) {
@@ -178,8 +265,9 @@ app.get("/api/portal/rentals/:rentalId/agreement", (req, res) => {
   const rental = rentals.find((item) => item.id === req.params.rentalId && item.customerId === currentCustomerId);
   if (!rental) return notFound(res, "Rental agreement");
   const pdf = rentalAgreementPdf(rental);
+  const disposition = req.query.download === "1" ? "attachment" : "inline";
   res.setHeader("Content-Type", "application/pdf");
-  res.setHeader("Content-Disposition", `attachment; filename="${rental.agreementNumber}-container-rental-agreement.pdf"`);
+  res.setHeader("Content-Disposition", `${disposition}; filename="${rental.agreementNumber}-container-rental-agreement.pdf"`);
   res.send(pdf);
 });
 
@@ -259,6 +347,29 @@ app.put("/api/admin/containers/:containerId", (req, res) => res.json({ id: req.p
 app.post("/api/admin/containers/:containerId/mark-maintenance", (req, res) => res.json({ containerId: req.params.containerId, status: "maintenance", issue: req.body.issue ?? null }));
 app.post("/api/admin/containers/:containerId/mark-available", (req, res) => res.json({ containerId: req.params.containerId, status: "available" }));
 
+app.get("/api/admin/container-inventory-file", async (_req, res) => {
+  try {
+    res.json(await readContainerInventoryFile());
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read container inventory file", detail: error.message });
+  }
+});
+
+app.post("/api/admin/container-inventory-file", async (req, res) => {
+  try {
+    const inventory = await readContainerInventoryFile();
+    const item = normalizeInventoryItem(req.body);
+    if (inventory.some((existing) => existing.id.toLowerCase() === item.id.toLowerCase())) {
+      return res.status(409).json({ error: "Container ID already exists" });
+    }
+    const nextInventory = [...inventory, item];
+    await writeContainerInventoryFile(nextInventory);
+    res.status(201).json({ item, inventory: nextInventory });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to save container inventory file", detail: error.message });
+  }
+});
+
 app.get("/api/admin/dispatch/jobs", (_req, res) => res.json(dispatchJobs));
 app.post("/api/admin/dispatch/jobs", (req, res) => res.status(201).json({ id: `job-stub-${Date.now()}`, status: "pending", ...req.body }));
 app.get("/api/admin/dispatch/jobs/:jobId", (req, res) => {
@@ -293,6 +404,41 @@ app.get("/api/admin/trucks", (_req, res) => res.json(trucks));
 app.post("/api/admin/trucks", (req, res) => res.status(201).json({ id: `truck-stub-${Date.now()}`, ...req.body }));
 app.put("/api/admin/trucks/:truckId", (req, res) => res.json({ id: req.params.truckId, ...req.body }));
 
+app.get("/api/admin/trucks-file", async (_req, res) => {
+  try {
+    res.json(await readTrucksFile());
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read trucks file", detail: error.message });
+  }
+});
+
+app.post("/api/admin/trucks-file", async (req, res) => {
+  try {
+    const fileTrucks = await readTrucksFile();
+    const item = normalizeTruck(req.body);
+    if (fileTrucks.some((existing) => existing.id.toLowerCase() === item.id.toLowerCase())) {
+      return res.status(409).json({ error: "Truck ID already exists" });
+    }
+    const nextTrucks = [...fileTrucks, item];
+    await writeTrucksFile(nextTrucks);
+    res.status(201).json({ item, trucks: nextTrucks });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to save trucks file", detail: error.message });
+  }
+});
+
+app.delete("/api/admin/trucks-file/:truckId", async (req, res) => {
+  try {
+    const fileTrucks = await readTrucksFile();
+    const nextTrucks = fileTrucks.filter((item) => item.id !== req.params.truckId);
+    if (nextTrucks.length === fileTrucks.length) return notFound(res, "Truck");
+    await writeTrucksFile(nextTrucks);
+    res.json({ deletedId: req.params.truckId, trucks: nextTrucks });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to delete truck", detail: error.message });
+  }
+});
+
 app.get("/api/admin/calendar", (_req, res) => res.json(calendarLayers));
 app.get("/api/admin/tax-export/quicken", (_req, res) => res.json(taxExport));
 
@@ -300,6 +446,41 @@ app.get("/api/admin/maintenance", (_req, res) => res.json(maintenanceRecords));
 app.post("/api/admin/maintenance", (req, res) => res.status(201).json({ id: `maint-stub-${Date.now()}`, status: "open", ...req.body }));
 app.put("/api/admin/maintenance/:recordId", (req, res) => res.json({ id: req.params.recordId, ...req.body }));
 app.post("/api/admin/maintenance/:recordId/close", (req, res) => res.json({ id: req.params.recordId, status: "closed", resolution: req.body.resolution ?? null }));
+
+app.get("/api/admin/work-orders-file", async (_req, res) => {
+  try {
+    res.json(await readWorkOrdersFile());
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read work orders file", detail: error.message });
+  }
+});
+
+app.post("/api/admin/work-orders-file", async (req, res) => {
+  try {
+    const workOrders = await readWorkOrdersFile();
+    const item = normalizeWorkOrder(req.body);
+    if (workOrders.some((existing) => existing.id.toLowerCase() === item.id.toLowerCase())) {
+      return res.status(409).json({ error: "Work order ID already exists" });
+    }
+    const nextWorkOrders = [...workOrders, item];
+    await writeWorkOrdersFile(nextWorkOrders);
+    res.status(201).json({ item, workOrders: nextWorkOrders });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to save work orders file", detail: error.message });
+  }
+});
+
+app.delete("/api/admin/work-orders-file/:workOrderId", async (req, res) => {
+  try {
+    const workOrders = await readWorkOrdersFile();
+    const nextWorkOrders = workOrders.filter((item) => item.id !== req.params.workOrderId);
+    if (nextWorkOrders.length === workOrders.length) return notFound(res, "Work order");
+    await writeWorkOrdersFile(nextWorkOrders);
+    res.json({ deletedId: req.params.workOrderId, workOrders: nextWorkOrders });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to delete work order", detail: error.message });
+  }
+});
 
 app.get("/api/admin/pricing", (_req, res) => res.json(pricing));
 app.put("/api/admin/pricing", (req, res) => res.json({ ...pricing, ...req.body, updatedAt: new Date().toISOString() }));

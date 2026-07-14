@@ -1,0 +1,38 @@
+[
+  {
+    "id": "WO-1001",
+    "container": "LR-REF-006",
+    "type": "Maintenance",
+    "issue": "Refrigeration compressor inspection",
+    "priority": "High",
+    "status": "Open",
+    "assignedTo": "Terry",
+    "dueDate": "2026-07-11",
+    "notes": "Inspect compressor, verify temperature hold, and record repair estimate.",
+    "createdAt": "2026-07-07T09:00:00.000Z"
+  },
+  {
+    "id": "WO-1002",
+    "container": "LR-40HC-022",
+    "type": "Repair",
+    "issue": "Door gasket and lockbox repair",
+    "priority": "Medium",
+    "status": "Open",
+    "assignedTo": "Mason",
+    "dueDate": "2026-07-14",
+    "notes": "Replace worn gasket, inspect lockbox welds, and photograph completed work.",
+    "createdAt": "2026-07-04T15:30:00.000Z"
+  },
+  {
+    "id": "WO-1003",
+    "container": "Truck T-02",
+    "type": "Truck service",
+    "issue": "Hydraulic service due",
+    "priority": "Medium",
+    "status": "Scheduled",
+    "assignedTo": "Ray",
+    "dueDate": "2026-07-10",
+    "notes": "Check hydraulics before the next 40 ft placement route.",
+    "createdAt": "2026-07-08T08:15:00.000Z"
+  }
+]
