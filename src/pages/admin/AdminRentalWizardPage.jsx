@@ -29,6 +29,15 @@ export function AdminRentalWizardPage() {
     closeout: wizard.pickupFee
   };
 
+  function handleBack() {
+    if (activeStep > 0) {
+      setActiveStep((step) => Math.max(0, step - 1));
+      return;
+    }
+
+    window.location.assign(selectedLeadId ? `/admin/leads?lead=${encodeURIComponent(selectedLeadId)}` : "/admin/leads");
+  }
+
   return (
     <AdminLayout>
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
@@ -142,7 +151,7 @@ export function AdminRentalWizardPage() {
             )}
 
             <div className="flex justify-between gap-3">
-              <Button variant="outline" disabled={activeStep === 0} onClick={() => setActiveStep((step) => Math.max(0, step - 1))}>Back</Button>
+              <Button variant="outline" onClick={handleBack}>Back</Button>
               <Button disabled={activeStep === wizard.steps.length - 1} onClick={() => setActiveStep((step) => Math.min(wizard.steps.length - 1, step + 1))}>Next</Button>
             </div>
           </div>

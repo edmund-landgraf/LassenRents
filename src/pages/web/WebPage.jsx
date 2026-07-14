@@ -7,10 +7,12 @@ import { PublicLayout } from "./PublicLayout";
 function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border bg-hero">
+      <div className="pointer-events-none absolute right-0 top-12 hidden h-24 w-48 border-y-4 border-primary/20 lg:block" />
+      <div className="pointer-events-none absolute bottom-10 left-0 hidden h-16 w-36 border-y-4 border-accent/30 lg:block" />
       <div className="container grid min-h-[620px] items-center gap-10 py-12 lg:grid-cols-[1.02fr_.98fr]">
         <div className="max-w-2xl">
           <Badge tone="success">Serving Lassen, Plumas, and Modoc Counties</Badge>
-          <h1 className="mt-5 text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">Lassen Rents</h1>
+          <h1 className="mt-5 text-4xl font-black leading-tight text-foreground sm:text-5xl lg:text-6xl">Lassen Rents</h1>
           <p className="mt-5 text-xl leading-8 text-muted-foreground">
             Onsite storage container rental, sales, pinpoint delivery, modifications, and trucking from a locally owned Susanville operator.
           </p>
@@ -18,7 +20,7 @@ function Hero() {
             <a
               href="/request-quote"
               onClick={() => saveContactIntent("Containers")}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-primary/20 bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Request a container
               <ArrowRight className="h-4 w-4" />
@@ -41,8 +43,9 @@ function Hero() {
           </div>
         </div>
         <div className="relative">
-          <img className="aspect-[4/3] w-full rounded-lg object-cover shadow-soft" src={legacyAssets.header} alt="Lassen Rents storage containers" />
-          <Card className="absolute bottom-4 left-4 right-4 p-4 sm:left-auto sm:w-72">
+          <div className="absolute -right-4 -top-4 h-24 w-24 rounded-md border-8 border-accent/60" />
+          <img className="relative aspect-[4/3] w-full rounded-lg border-4 border-card object-cover shadow-soft" src={legacyAssets.header} alt="Lassen Rents storage containers" />
+          <Card className="absolute bottom-4 left-4 right-4 border-primary/20 p-4 sm:left-auto sm:w-72">
             <div className="flex items-start gap-3">
               <ShieldCheck className="mt-1 h-5 w-5 text-emerald-700" />
               <div>
@@ -74,7 +77,7 @@ function ServiceOverview() {
       <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {services.map((service) => (
           <a key={service.title} href={service.href}>
-            <Card className="h-full p-5 transition hover:-translate-y-0.5 hover:border-primary/40">
+            <Card className="h-full border-t-4 border-t-primary p-5 transition hover:-translate-y-0.5 hover:border-primary/40">
               <h3 className="font-semibold">{service.title}</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{service.copy}</p>
               <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">

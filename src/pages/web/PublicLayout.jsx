@@ -15,20 +15,20 @@ export function PublicHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/94 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-card/92 shadow-sm backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
         <a href="/" className="flex items-center gap-3 font-bold">
-          <span className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
+          <span className="container-badge flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Container className="h-5 w-5" />
           </span>
           <span>
             <span className="block leading-tight">Lassen Rents</span>
-            <span className="block text-xs font-medium text-muted-foreground">Susanville container rental</span>
+            <span className="block text-xs font-bold uppercase tracking-wide text-primary">Susanville container rental</span>
           </span>
         </a>
         <nav className="hidden items-center gap-1 md:flex">
           {nav.map((item) => (
-            <a key={item.label} href={item.href} className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">
+            <a key={item.label} href={item.href} className="rounded-md px-3 py-2 text-sm font-semibold text-muted-foreground hover:bg-muted hover:text-foreground">
               {item.label}
             </a>
           ))}
@@ -41,7 +41,7 @@ export function PublicHeader() {
           <a
             href="/request-quote"
             onClick={() => saveContactIntent("Containers")}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-primary/20 bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Request quote
             <ArrowRight className="h-4 w-4" />
@@ -57,7 +57,7 @@ export function PublicHeader() {
 
 export function PublicFooter() {
   return (
-    <footer className="border-t border-border bg-muted/45">
+    <footer className="border-t border-border bg-[linear-gradient(180deg,hsl(var(--muted))_0%,hsl(var(--secondary))_100%)]">
       <section className="container py-10">
         <div className="grid gap-4 lg:grid-cols-4">
           <Card className="p-5">
@@ -155,10 +155,10 @@ export function PublicFooter() {
 
 export function PublicLayout({ children }) {
   return (
-    <>
+    <div className="yard-shell">
       <PublicHeader />
       <main>{children}</main>
       <PublicFooter />
-    </>
+    </div>
   );
 }

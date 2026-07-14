@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, MapPinned, Truck } from "lucide-react";
+import { ArrowLeft, ArrowRight, MapPinned, Truck } from "lucide-react";
 import { Badge, Button, Card } from "@/components/ui";
 import { demoWorkflow } from "@/data/siteData";
 import { AdminLayout } from "./AdminLayout";
@@ -16,15 +16,16 @@ export function AdminDispatchPage() {
   const [jobs, setJobs] = useState(demoWorkflow.dispatchBoard);
   const summary = useMemo(() => lanes.map((lane) => ({ lane, count: jobs.filter((job) => job.lane === lane).length })), [jobs]);
 
-  function advanceJob(jobId) {
+  function moveJob(jobId, direction) {
     setJobs((current) => current.map((job) => {
       if (job.id !== jobId) return job;
-      const nextLane = lanes[Math.min(lanes.length - 1, lanes.indexOf(job.lane) + 1)];
+      const currentLaneIndex = lanes.indexOf(job.lane);
+      const nextLane = lanes[Math.min(lanes.length - 1, Math.max(0, currentLaneIndex + direction))];
       return {
         ...job,
         lane: nextLane,
-        truck: job.truck === "Needs high-cube truck" ? "Landoll High Cube" : job.truck,
-        driver: job.driver === "Unassigned" ? "Ray" : job.driver
+        truck: direction > 0 && job.truck === "Needs high-cube truck" ? "Landoll High Cube" : job.truck,
+        driver: direction > 0 && job.driver === "Unassigned" ? "Ray" : job.driver
       };
     }));
   }
@@ -69,12 +70,20 @@ export function AdminDispatchPage() {
                     <p className="flex items-start gap-2"><MapPinned className="mt-0.5 h-4 w-4 text-primary" />{job.address}</p>
                   </div>
                   <p className="mt-3 text-xs leading-5 text-muted-foreground">{job.note}</p>
-                  {lane !== "Complete" && (
-                    <Button className="mt-3 h-9 w-full" variant="outline" onClick={() => advanceJob(job.id)}>
-                      Advance
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  )}
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
+                    {lane !== "Unassigned" && (
+                      <Button className="h-9 w-full" variant="outline" onClick={() => moveJob(job.id, -1)}>
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                      </Button>
+                    )}
+                    {lane !== "Complete" && (
+                      <Button className="h-9 w-full" variant="outline" onClick={() => moveJob(job.id, 1)}>
+                        Advance
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

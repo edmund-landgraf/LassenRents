@@ -1,6 +1,13 @@
 export const CONTACT_INTENT_KEY = "lassenRents.contactIntent";
 
-export const contactInterestOptions = ["Containers", "Accessories", "Modifications", "Delivery", "Trucking", "Gallery"];
+export const contactInterestOptions = [
+  "Rent a container",
+  "Move my container",
+  "Buy a container",
+  "Modify a container",
+  "Accessories",
+  "General question"
+];
 
 export function saveContactIntent(intent) {
   if (typeof window === "undefined" || !intent) return;
