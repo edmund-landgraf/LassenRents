@@ -67,7 +67,7 @@ export function RequestQuotePage() {
             <p className="mt-4 text-muted-foreground">
               Rent a container, move a container you already own, ask about trucking, or request modifications. The office can confirm availability, delivery, pickup, transport, and pricing.
             </p>
-            <Card className="mt-6 p-5">
+            <Card className="freight-card mt-6 p-5 pl-7">
               <h2 className="font-semibold">Contact Lassen Rents</h2>
               <div className="mt-4 grid gap-3 text-sm text-muted-foreground">
                 <a className="flex items-center gap-2 hover:text-foreground" href="tel:15302573865">
@@ -86,7 +86,10 @@ export function RequestQuotePage() {
             </Card>
           </div>
 
-          <Card className="p-0">
+          <Card className="field-surface overflow-hidden p-0">
+            <div className="bolt-strip border-b border-border bg-primary px-6 py-3 text-sm font-black uppercase tracking-wide text-primary-foreground">
+              Quote intake
+            </div>
             <form className="grid gap-5 p-6" onSubmit={handleSubmit}>
               {submittedLead && (
                 <div className="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
@@ -100,7 +103,7 @@ export function RequestQuotePage() {
                   {contactInterestOptions.map((interest) => (
                     <label
                       key={interest}
-                      className="flex min-h-11 cursor-pointer items-center gap-3 rounded-md border border-input bg-background px-3 text-sm font-semibold transition hover:bg-muted"
+                      className="flex min-h-11 cursor-pointer items-center gap-3 rounded-md border border-input bg-card/80 px-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-muted"
                     >
                       <input
                         className="h-4 w-4 rounded border-input accent-primary"
@@ -115,7 +118,7 @@ export function RequestQuotePage() {
               </fieldset>
 
               {isRentingContainer && (
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 rounded-md border border-border bg-card/70 p-4 md:grid-cols-2">
                   <label className="grid gap-2 text-sm font-medium">
                     Container type
                     <select className="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring" value={form.container} onChange={(event) => updateForm("container", event.target.value)}>

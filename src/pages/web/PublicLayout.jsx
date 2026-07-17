@@ -15,20 +15,20 @@ export function PublicHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-card/92 shadow-sm backdrop-blur">
+    <header className="yard-header sticky top-0 z-40 border-b border-border shadow-sm backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
         <a href="/" className="flex items-center gap-3 font-bold">
           <span className="container-badge flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Container className="h-5 w-5" />
           </span>
           <span>
-            <span className="block leading-tight">Lassen Rents</span>
-            <span className="block text-xs font-bold uppercase tracking-wide text-primary">Susanville container rental</span>
+            <span className="block leading-tight tracking-wide">Lassen Rents</span>
+            <span className="block text-xs font-black uppercase tracking-wide text-primary">Susanville container yard</span>
           </span>
         </a>
         <nav className="hidden items-center gap-1 md:flex">
           {nav.map((item) => (
-            <a key={item.label} href={item.href} className="rounded-md px-3 py-2 text-sm font-semibold text-muted-foreground hover:bg-muted hover:text-foreground">
+            <a key={item.label} href={item.href} className="rounded-md px-3 py-2 text-sm font-bold text-muted-foreground hover:bg-muted hover:text-foreground">
               {item.label}
             </a>
           ))}
@@ -41,7 +41,7 @@ export function PublicHeader() {
           <a
             href="/request-quote"
             onClick={() => saveContactIntent("Containers")}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-primary/20 bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="bolt-strip inline-flex h-10 items-center justify-center gap-2 rounded-md border border-primary/20 bg-primary px-4 text-sm font-bold text-primary-foreground shadow-sm transition hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Request quote
             <ArrowRight className="h-4 w-4" />
@@ -60,7 +60,7 @@ export function PublicFooter() {
     <footer className="border-t border-border bg-[linear-gradient(180deg,hsl(var(--muted))_0%,hsl(var(--secondary))_100%)]">
       <section className="container py-10">
         <div className="grid gap-4 lg:grid-cols-4">
-          <Card className="p-5">
+          <Card className="freight-card p-5 pl-7">
             <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary">
               <MapPinned className="h-5 w-5" />
             </div>
@@ -70,7 +70,7 @@ export function PublicFooter() {
             </p>
           </Card>
 
-          <Card className="overflow-hidden">
+          <Card className="overflow-hidden border-t-4 border-t-primary">
             <div className="flex h-36 items-center justify-center bg-white p-3">
               <img className="max-h-full w-full object-contain" src="/assets/site/custom-containers.png" alt="Custom order new and used containers" />
             </div>
@@ -90,7 +90,7 @@ export function PublicFooter() {
             </div>
           </Card>
 
-          <Card className="overflow-hidden">
+          <Card className="overflow-hidden border-t-4 border-t-primary/70">
             <div className="flex h-36 items-center justify-center bg-white p-3">
               <img className="max-h-full w-full object-contain" src="/assets/site/insta-modifications.gif" alt="Authorized agent for Insta Modifications" />
             </div>
@@ -105,7 +105,7 @@ export function PublicFooter() {
             </div>
           </Card>
 
-          <Card className="overflow-hidden">
+          <Card className="overflow-hidden border-t-4 border-t-primary">
             <div className="grid grid-cols-[92px_1fr] gap-4 p-5">
               <img className="h-28 w-full rounded-md object-cover" src="/assets/site/terry-mallery.jpg" alt="Terry Mallery, owner of Lassen Rents" />
               <div>

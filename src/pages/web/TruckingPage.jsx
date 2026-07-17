@@ -36,7 +36,7 @@ export function TruckingPage() {
 
   return (
     <PublicLayout>
-      <section className="border-b border-border bg-slate-50">
+      <section className="border-b border-border bg-hero">
         <div className="container grid gap-10 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-primary">Trucking</p>
@@ -49,7 +49,7 @@ export function TruckingPage() {
               <a
                 href="/request-quote"
                 onClick={() => saveContactIntent("Trucking")}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="bolt-strip inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 Ask about trucking
                 <ArrowRight className="h-4 w-4" />
@@ -64,7 +64,7 @@ export function TruckingPage() {
             </div>
           </div>
 
-          <Card className="overflow-hidden p-3">
+          <Card className="field-surface overflow-hidden p-3">
             <div className="flex min-h-80 items-center bg-white">
               <img className="h-auto w-full rounded-md object-contain" src={hero.image} alt={hero.title} />
             </div>
@@ -84,7 +84,7 @@ export function TruckingPage() {
           {serviceCards.map((service) => {
             const Icon = service.icon;
             return (
-              <Card key={service.title} className="p-5">
+              <Card key={service.title} className="freight-card p-5 pl-7">
                 <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary">
                   <Icon className="h-5 w-5" />
                 </div>
@@ -96,7 +96,7 @@ export function TruckingPage() {
         </div>
       </section>
 
-      <section className="border-y border-border bg-white">
+      <section className="border-y border-border bg-muted/35">
         <div className="container grid gap-8 py-14 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-primary">Original services preserved</p>
@@ -117,7 +117,7 @@ export function TruckingPage() {
 
           <div className="grid gap-4 md:grid-cols-3">
             {featured.map((item) => (
-              <Card key={item.title} className="overflow-hidden">
+              <Card key={item.title} className="freight-card overflow-hidden">
                 <div className="flex aspect-[4/3] items-center bg-white p-3">
                   <img className="max-h-full w-full object-contain" src={item.image} alt={item.title} />
                 </div>
@@ -144,7 +144,7 @@ export function TruckingPage() {
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {gallery.map((item) => (
-            <Card key={item.title} className="overflow-hidden">
+            <Card key={item.title} className="freight-card overflow-hidden">
               <div className="flex aspect-[4/3] items-center bg-white p-3">
                 <img className="max-h-full w-full object-contain" src={item.image} alt={item.title} loading="lazy" />
               </div>

@@ -25,7 +25,7 @@ export function Badge({ children, tone = "default" }) {
   return (
     <span
       className={cn(
-        "inline-flex rounded-sm border px-2 py-1 text-xs font-semibold shadow-sm",
+        "inline-flex rounded-sm border px-2 py-1 text-xs font-black uppercase tracking-wide shadow-sm",
         tone === "default" && "border-secondary/80 bg-secondary text-secondary-foreground",
         tone === "success" && "border-emerald-200 bg-emerald-100 text-emerald-800",
         tone === "warn" && "border-amber-200 bg-amber-100 text-amber-900",

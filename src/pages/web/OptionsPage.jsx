@@ -57,7 +57,7 @@ export function OptionsPage() {
 
   return (
     <PublicLayout>
-      <section className="border-b border-border bg-muted/45 py-14">
+      <section className="border-b border-border bg-hero py-14">
         <div className="container">
           <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
             <div>
@@ -69,13 +69,13 @@ export function OptionsPage() {
               <a
                 href="/request-quote"
                 onClick={() => saveContactIntent("Accessories")}
-                className="mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="bolt-strip mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 Ask about accessories
                 <ArrowRight className="h-4 w-4" />
               </a>
             </div>
-            <img className="h-72 w-full rounded-lg border border-border object-cover shadow-soft" src={legacyAssets.modifications} alt="Modified storage container office interior" />
+            <img className="h-72 w-full rounded-md border-4 border-card object-cover shadow-soft" src={legacyAssets.modifications} alt="Modified storage container office interior" />
           </div>
         </div>
       </section>
@@ -83,7 +83,7 @@ export function OptionsPage() {
       <section className="py-12">
         <div className="container space-y-6">
           {accessorySections.map((section, index) => (
-            <Card key={section.title} className="overflow-hidden">
+            <Card key={section.title} className="freight-card overflow-hidden">
               <div className={`grid gap-0 lg:grid-cols-2 ${index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
                 <div className="min-h-72 bg-muted">
                   <img className="h-full min-h-72 w-full object-cover" src={section.image} alt={section.imageAlt} />
@@ -124,14 +124,14 @@ export function OptionsPage() {
               <a
                 href="/request-quote"
                 onClick={() => saveContactIntent("Modifications")}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="bolt-strip inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 Ask about modifications
                 <ArrowRight className="h-4 w-4" />
               </a>
             </div>
 
-            <Card className="overflow-hidden">
+            <Card className="field-surface overflow-hidden">
               <div className="grid gap-0 lg:grid-cols-[1.1fr_.9fr]">
                 <div className="flex min-h-[260px] items-center bg-white p-4 sm:min-h-[300px]">
                   <img

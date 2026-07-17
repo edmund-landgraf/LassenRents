@@ -4,17 +4,17 @@
 
 @layer base {
   :root {
-    --background: 42 35% 94%;
-    --foreground: 184 28% 12%;
-    --card: 48 45% 98%;
+    --background: 43 31% 92%;
+    --foreground: 188 31% 12%;
+    --card: 46 41% 97%;
     --card-foreground: 184 28% 12%;
-    --primary: 176 72% 24%;
+    --primary: 176 69% 22%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 36 31% 86%;
+    --secondary: 38 28% 84%;
     --secondary-foreground: 184 34% 16%;
-    --muted: 38 28% 88%;
-    --muted-foreground: 190 10% 35%;
-    --accent: 34 92% 49%;
+    --muted: 40 24% 86%;
+    --muted-foreground: 190 12% 34%;
+    --accent: 31 91% 48%;
     --accent-foreground: 31 80% 12%;
     --destructive: 0 70% 46%;
     --destructive-foreground: 0 0% 100%;
@@ -37,10 +37,11 @@
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     overflow-x: clip;
     background:
-      linear-gradient(90deg, rgba(22, 93, 86, 0.045) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(22, 93, 86, 0.035) 1px, transparent 1px),
-      linear-gradient(135deg, hsl(var(--background)), #fbf7ee 45%, #eef3ed);
-    background-size: 34px 34px, 34px 34px, auto;
+      linear-gradient(90deg, rgba(18, 88, 83, 0.04) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(88, 70, 48, 0.035) 1px, transparent 1px),
+      radial-gradient(circle at 12% 0%, rgba(225, 111, 42, 0.12), transparent 26rem),
+      linear-gradient(135deg, hsl(var(--background)), #fbf4e6 48%, #e9f0e7);
+    background-size: 38px 38px, 38px 38px, auto, auto;
   }
 
   #root {
@@ -51,9 +52,10 @@
 
 .bg-hero {
   background:
-    linear-gradient(115deg, rgba(247, 242, 229, 0.96), rgba(235, 244, 239, 0.9)),
-    repeating-linear-gradient(90deg, rgba(18, 95, 88, 0.08) 0 1px, transparent 1px 24px),
-    radial-gradient(circle at top right, rgba(234, 121, 35, 0.28), transparent 34%);
+    linear-gradient(116deg, rgba(248, 242, 228, 0.96), rgba(232, 240, 233, 0.9)),
+    repeating-linear-gradient(90deg, rgba(18, 95, 88, 0.08) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(0deg, transparent 0 21px, rgba(92, 73, 47, 0.06) 21px 22px),
+    radial-gradient(circle at top right, rgba(231, 112, 39, 0.3), transparent 34%);
 }
 
 @layer components {
@@ -62,16 +64,22 @@
   }
 
   .yard-shell::before {
-    background: linear-gradient(90deg, hsl(var(--accent)), hsl(var(--primary)));
+    background: linear-gradient(90deg, hsl(var(--primary)), rgba(18, 88, 83, 0.68));
     content: "";
-    height: 4px;
+    height: 3px;
     inset: 0 0 auto;
     position: fixed;
     z-index: 60;
   }
 
+  .yard-header {
+    background:
+      linear-gradient(180deg, rgba(255, 252, 244, 0.96), rgba(247, 240, 225, 0.9)),
+      repeating-linear-gradient(90deg, rgba(19, 92, 86, 0.055) 0 1px, transparent 1px 18px);
+  }
+
   .container-badge {
-    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18);
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.22), 0 8px 18px rgba(15, 78, 74, 0.16);
     position: relative;
   }
 
@@ -90,12 +98,41 @@
       linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 253, 248, 0.96)),
       repeating-linear-gradient(90deg, rgba(22, 93, 86, 0.045) 0 1px, transparent 1px 18px);
   }
+
+  .freight-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .freight-card::before {
+    background: hsl(var(--primary));
+    content: "";
+    inset: 0 auto 0 0;
+    position: absolute;
+    width: 5px;
+  }
+
+  .bolt-strip {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent);
+  }
+
+  .field-surface {
+    background:
+      linear-gradient(180deg, rgba(255, 253, 248, 0.95), rgba(247, 242, 230, 0.9)),
+      repeating-linear-gradient(90deg, rgba(18, 95, 88, 0.035) 0 1px, transparent 1px 16px);
+  }
 }
 
 input,
 select,
 textarea {
   background-color: rgba(255, 253, 248, 0.88);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 3px rgba(19, 111, 104, 0.14);
 }
 
 ::selection {

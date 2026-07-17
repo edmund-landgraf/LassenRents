@@ -50,7 +50,7 @@ const mediaCards = [
 export function DeliveryPage() {
   return (
     <PublicLayout>
-      <section className="border-b border-border bg-slate-50">
+      <section className="border-b border-border bg-hero">
         <div className="container grid gap-10 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-primary">PinPoint Delivery</p>
@@ -63,7 +63,7 @@ export function DeliveryPage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                className="bolt-strip inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
                 href="/request-quote"
                 onClick={() => saveContactIntent("Delivery")}
               >
@@ -80,7 +80,7 @@ export function DeliveryPage() {
             </div>
           </div>
 
-          <Card className="overflow-hidden bg-slate-950 p-3">
+          <Card className="overflow-hidden bg-slate-950 p-3 ring-4 ring-card/70">
             <div className="aspect-video overflow-hidden rounded-md bg-black">
               <iframe
                 className="h-full w-full"
@@ -105,7 +105,7 @@ export function DeliveryPage() {
           {deliveryHighlights.map((item) => {
             const Icon = item.icon;
             return (
-              <Card key={item.label} className="p-5">
+              <Card key={item.label} className="freight-card p-5 pl-7">
                 <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary">
                   <Icon className="h-5 w-5" />
                 </div>
@@ -117,7 +117,7 @@ export function DeliveryPage() {
         </div>
       </section>
 
-      <section className="bg-white">
+      <section className="border-y border-border bg-muted/35">
         <div className="container grid gap-10 py-14 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-primary">Delivery planning</p>
@@ -139,7 +139,7 @@ export function DeliveryPage() {
             </div>
           </div>
 
-          <Card className="overflow-hidden p-3">
+          <Card className="freight-card overflow-hidden p-3 pl-5">
             <img className="h-auto w-full rounded-md object-contain" src={deliveryAssets.hero} alt="PinPoint delivery truck placing a container" />
             <div className="grid gap-3 p-4 sm:grid-cols-2">
               {["Flat dropoff fee", "Flat pickup fee", "Truck assignment", "Worker capacity"].map((item) => (
@@ -156,7 +156,7 @@ export function DeliveryPage() {
       <section className="container pb-16">
         <div className="grid gap-6 lg:grid-cols-2">
           {mediaCards.map((item) => (
-            <Card key={item.title} className="overflow-hidden">
+            <Card key={item.title} className="freight-card overflow-hidden">
               <div className="bg-slate-100 p-3">
                 <img className="h-auto w-full rounded-md object-contain" src={item.image} alt={item.title} />
               </div>
@@ -168,7 +168,7 @@ export function DeliveryPage() {
           ))}
         </div>
 
-        <Card className="mt-6 overflow-hidden">
+        <Card className="field-surface mt-6 overflow-hidden">
           <div className="grid gap-6 p-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div>
               <div className="flex h-11 w-11 items-center justify-center rounded-md bg-primary/10 text-primary">
