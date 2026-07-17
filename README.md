@@ -86,7 +86,7 @@ npm run dev
 npm run build
 ```
 
-The Vite dev server runs on port `5180` and proxies `/api` and `/help` to the Express stub on port `5175`.
+The Vite dev server runs on port `5195` (matches prod nginx for `lassenrents.unwhelm.online`) and proxies `/api` and `/help` to the Express stub on port `5175`.
 
 ## API Stubs
 
