@@ -169,7 +169,7 @@ export function AdminLeadsPage() {
               </div>
             </div>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <a className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/90" href={`/admin/rentals/new?lead=${encodeURIComponent(selectedLead.id)}`}>
+              <a className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/90" href={`/admin/rentals?lead=${encodeURIComponent(selectedLead.id)}`}>
                 Convert to rental
               </a>
               <a className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-border bg-background px-4 text-sm font-semibold hover:bg-muted" href="/admin/dispatch">

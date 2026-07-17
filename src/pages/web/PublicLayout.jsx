@@ -132,7 +132,7 @@ export function PublicFooter() {
           <div className="mt-6 flex items-center gap-4">
             <img
               className="h-16 w-16 rounded-md object-cover"
-              src="/assets/site/terry-mallery.jpg"
+              src="/assets/site/terry-mallery-headshot.jpg"
               alt="Terry Mallery, owner of Lassen Rents"
             />
             <div>

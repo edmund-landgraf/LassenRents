@@ -10,25 +10,35 @@
     <main class="shell">
       <header class="topbar">
         <a class="brand" href="/help">Lassen Rents Help</a>
-        <nav><a href="/admin/dispatch">Dispatch</a><a href="/admin/calendar">Calendar</a></nav>
+        <nav><a href="/admin/dispatch">Dispatch</a><a href="/admin/inspection">Inspection</a><a href="/admin/calendar">Calendar</a></nav>
       </header>
       <section class="hero">
         <p class="eyebrow">Field operations</p>
         <h1>Dispatch and driver flow</h1>
-        <p class="lede">Dispatch turns rentals and pickups into scheduled jobs with the right truck, driver, address, notes, and status.</p>
+        <p class="lede">Dispatch turns rentals and pickups into scheduled jobs. Inspection is a master-detail screen where drivers work one job at a time against a shared five-step checklist.</p>
       </section>
       <article class="article">
         <section>
           <h2>Operational flow</h2>
           <ol class="steps">
-            <li>Review unassigned dropoff, pickup, and service jobs.</li>
+            <li>Review unassigned dropoff, pickup, and service jobs on the dispatch board.</li>
             <li>Match the job to truck capability such as 20 ft, 40 ft, and high-cube hauling.</li>
             <li>Advance the job from Unassigned to Assigned, In Route, and Complete.</li>
             <li>Open calendar details for address, asset, truck, and driver notes.</li>
-            <li>Complete the driver inspection checklist before closeout.</li>
+            <li>Open Inspection to finish the driver checklist and closeout package.</li>
           </ol>
         </section>
-        <p class="note">Demo note: board movement is local UI state so the workflow can be shown without a database.</p>
+        <section>
+          <h2>Inspection master-detail</h2>
+          <ol class="steps">
+            <li>Open <a href="/admin/inspection">Inspection</a>. The left list shows multiple inspection jobs from <code>public/data/inspections.json</code>.</li>
+            <li>Select a row to load the detail pane for that job, customer, container, and address.</li>
+            <li>Work the same five checklist steps for every job: empty/access, photos, condition, placement or pickup notes, and signature.</li>
+            <li>Attach placement photos and capture the customer signature in the demo slots.</li>
+            <li>Add a completion note, then Complete inspection. Progress and notes save through <code>/api/admin/inspections</code>.</li>
+          </ol>
+        </section>
+        <p class="note">Demo note: the dispatch board still uses local UI state for lane movement. Inspection checklist progress, photos, signature flags, and completion notes persist to the inspections JSON file.</p>
       </article>
       <footer class="footer"><a href="/help">Back to Help Center</a></footer>
     </main>

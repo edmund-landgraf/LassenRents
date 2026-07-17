@@ -1,0 +1,96 @@
+[
+  {
+    "id": "INSP-766",
+    "jobId": "JOB-766",
+    "type": "Service",
+    "customer": "Mallery Construction",
+    "container": "LR-20HC-118",
+    "driver": "Terry",
+    "scheduledAt": "Today, 2:00 PM",
+    "address": "705-120 Johnstonville Rd, Susanville, CA",
+    "status": "In progress",
+    "checkedItems": [
+      "Confirm container is empty and accessible"
+    ],
+    "photosAdded": false,
+    "signed": false,
+    "completionNote": "",
+    "completedAt": null
+  },
+  {
+    "id": "INSP-768",
+    "jobId": "JOB-768",
+    "type": "Pickup",
+    "customer": "Plumas Ag Supply",
+    "container": "LR-20-091",
+    "driver": "Mason",
+    "scheduledAt": "Jul 16, 11:00 AM",
+    "address": "Quincy, CA",
+    "status": "Pending",
+    "checkedItems": [],
+    "photosAdded": false,
+    "signed": false,
+    "completionNote": "",
+    "completedAt": null
+  },
+  {
+    "id": "INSP-771",
+    "jobId": "JOB-771",
+    "type": "Dropoff",
+    "customer": "Honey Lake Ag Supply",
+    "container": "LR-40HC-203",
+    "driver": "Unassigned",
+    "scheduledAt": "Jul 18, 9:00 AM",
+    "address": "Johnstonville Rd, Susanville, CA",
+    "status": "Pending",
+    "checkedItems": [],
+    "photosAdded": false,
+    "signed": false,
+    "completionNote": "",
+    "completedAt": null
+  },
+  {
+    "id": "INSP-761",
+    "jobId": "JOB-761",
+    "type": "Dropoff",
+    "customer": "Lassen High School",
+    "container": "LR-20-122",
+    "driver": "Ray",
+    "scheduledAt": "Today, 8:30 AM",
+    "address": "Susanville, CA",
+    "status": "Complete",
+    "checkedItems": [
+      "Confirm container is empty and accessible",
+      "Photograph all four sides before loading",
+      "Check doors, gasket, roof line, lockbox, and floor",
+      "Record placement or pickup condition",
+      "Collect customer signature when required"
+    ],
+    "photosAdded": true,
+    "signed": true,
+    "completionNote": "Placed behind maintenance building. Customer signed on site.",
+    "completedAt": "2026-07-17T15:45:00.000Z"
+  },
+  {
+    "id": "INSP-755",
+    "jobId": "JOB-755",
+    "type": "Pickup",
+    "customer": "Modoc County",
+    "container": "LR-40-044",
+    "driver": "Mason",
+    "scheduledAt": "Jul 14, 1:00 PM",
+    "address": "Alturas, CA",
+    "status": "Complete",
+    "checkedItems": [
+      "Confirm container is empty and accessible",
+      "Photograph all four sides before loading",
+      "Check doors, gasket, roof line, lockbox, and floor",
+      "Record placement or pickup condition",
+      "Collect customer signature when required"
+    ],
+    "photosAdded": true,
+    "signed": true,
+    "completionNote": "Floor scuff noted on left rear; photos attached.",
+    "completedAt": "2026-07-14T20:10:00.000Z"
+  }
+]

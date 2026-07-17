@@ -23,6 +23,9 @@ const port = Number(process.env.PORT) || 5175;
 const inventoryFilePath = path.join(process.cwd(), "public", "data", "container-inventory.json");
 const workOrdersFilePath = path.join(process.cwd(), "public", "data", "work-orders.json");
 const trucksFilePath = path.join(process.cwd(), "public", "data", "trucks.json");
+const rentalsFilePath = path.join(process.cwd(), "public", "data", "rentals.json");
+const invoicesFilePath = path.join(process.cwd(), "public", "data", "invoices.json");
+const inspectionsFilePath = path.join(process.cwd(), "public", "data", "inspections.json");
 const helpPath = path.join(process.cwd(), "server", "help");
 
 app.use(cors());
@@ -113,6 +116,111 @@ function normalizeTruck(body) {
     driver: String(body.driver || "Unassigned").trim(),
     nextService: String(body.nextService || "").trim(),
     note: String(body.note || "").trim()
+  };
+}
+
+async function readRentalsFile() {
+  const contents = await readFile(rentalsFilePath, "utf8");
+  return JSON.parse(contents);
+}
+
+async function writeRentalsFile(items) {
+  await mkdir(path.dirname(rentalsFilePath), { recursive: true });
+  await writeFile(rentalsFilePath, `${JSON.stringify(items, null, 2)}\n`, "utf8");
+}
+
+function nextAgreementNumber(items) {
+  const max = items.reduce((highest, item) => {
+    const match = String(item.agreementNumber || "").match(/(\d+)$/);
+    const value = match ? Number(match[1]) : 0;
+    return value > highest ? value : highest;
+  }, 1000);
+  return `RA-${max + 1}`;
+}
+
+async function readInvoicesFile() {
+  const contents = await readFile(invoicesFilePath, "utf8");
+  return JSON.parse(contents);
+}
+
+async function writeInvoicesFile(items) {
+  await mkdir(path.dirname(invoicesFilePath), { recursive: true });
+  await writeFile(invoicesFilePath, `${JSON.stringify(items, null, 2)}\n`, "utf8");
+}
+
+function normalizeInvoice(body) {
+  return {
+    id: String(body.id || `INV-${Date.now().toString().slice(-4)}`).trim(),
+    customer: String(body.customer || "").trim(),
+    due: String(body.due || "").trim(),
+    amount: Number(body.amount) || 0,
+    status: String(body.status || "Open").trim(),
+    age: String(body.age || "").trim(),
+    paymentNote: String(body.paymentNote || "").trim(),
+    paidAt: body.paidAt || null,
+    previousAmount: body.previousAmount ?? null,
+    previousAge: body.previousAge ?? null,
+    previousStatus: body.previousStatus ?? null
+  };
+}
+
+async function readInspectionsFile() {
+  const contents = await readFile(inspectionsFilePath, "utf8");
+  return JSON.parse(contents);
+}
+
+async function writeInspectionsFile(items) {
+  await mkdir(path.dirname(inspectionsFilePath), { recursive: true });
+  await writeFile(inspectionsFilePath, `${JSON.stringify(items, null, 2)}\n`, "utf8");
+}
+
+function normalizeInspection(body) {
+  const checkedItems = Array.isArray(body.checkedItems)
+    ? body.checkedItems.map((item) => String(item).trim()).filter(Boolean)
+    : [];
+
+  return {
+    id: String(body.id || `INSP-${Date.now().toString().slice(-4)}`).trim(),
+    jobId: String(body.jobId || "").trim(),
+    type: String(body.type || "Service").trim(),
+    customer: String(body.customer || "").trim(),
+    container: String(body.container || "").trim(),
+    driver: String(body.driver || "Unassigned").trim(),
+    scheduledAt: String(body.scheduledAt || "").trim(),
+    address: String(body.address || "").trim(),
+    status: String(body.status || "Pending").trim(),
+    checkedItems,
+    photosAdded: Boolean(body.photosAdded),
+    signed: Boolean(body.signed),
+    completionNote: String(body.completionNote || "").trim(),
+    completedAt: body.completedAt || null
+  };
+}
+
+function normalizeRental(body, existing = []) {
+  const stamp = Date.now().toString().slice(-6);
+  const id = String(body.id || `rent-${stamp}`).trim();
+  const agreementNumber = String(body.agreementNumber || nextAgreementNumber(existing)).trim();
+
+  return {
+    id,
+    agreementNumber,
+    customer: String(body.customer || "").trim(),
+    customerEmail: String(body.customerEmail || "").trim(),
+    customerPhone: String(body.customerPhone || "").trim(),
+    container: String(body.container || "").trim(),
+    containerSize: String(body.containerSize || "").trim(),
+    status: String(body.status || "Draft").trim(),
+    siteAddress: String(body.siteAddress || "").trim(),
+    startDate: String(body.startDate || "").trim(),
+    dueBackDate: String(body.dueBackDate || "").trim(),
+    rentalRate: Number(body.rentalRate) || 0,
+    rateUnit: String(body.rateUnit || "monthly").trim(),
+    deliveryFee: Number(body.deliveryFee) || 0,
+    pickupFee: Number(body.pickupFee) || 0,
+    depositAmount: Number(body.depositAmount) || 0,
+    notes: String(body.notes || "").trim(),
+    createdAt: body.createdAt || new Date().toISOString()
   };
 }
 
@@ -322,15 +430,99 @@ app.get("/api/admin/customers/:customerId", (req, res) => {
 });
 app.put("/api/admin/customers/:customerId", (req, res) => res.json({ id: req.params.customerId, ...req.body, status: "stub_updated" }));
 
-app.get("/api/admin/rentals", (_req, res) => res.json(rentals.map(decorateRental)));
-app.post("/api/admin/rentals", (req, res) => res.status(201).json({ id: `rent-stub-${Date.now()}`, status: "draft", ...req.body }));
-app.get("/api/admin/rentals/:rentalId", (req, res) => {
-  const rental = byId(rentals, req.params.rentalId);
-  return rental ? res.json(decorateRental(rental)) : notFound(res, "Rental");
+app.get("/api/admin/rentals", async (_req, res) => {
+  try {
+    res.json(await readRentalsFile());
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read rentals file", detail: error.message });
+  }
 });
-app.put("/api/admin/rentals/:rentalId", (req, res) => res.json({ id: req.params.rentalId, ...req.body, status: "stub_updated" }));
-["activate", "complete", "cancel"].forEach((action) => {
-  app.post(`/api/admin/rentals/:rentalId/${action}`, (req, res) => res.json({ rentalId: req.params.rentalId, action, ok: true }));
+
+app.post("/api/admin/rentals", async (req, res) => {
+  try {
+    const fileRentals = await readRentalsFile();
+    const item = normalizeRental(req.body, fileRentals);
+
+    if (!item.customer || !item.container || !item.startDate) {
+      return res.status(400).json({ error: "Customer, container, and start date are required" });
+    }
+
+    if (fileRentals.some((existing) => existing.id.toLowerCase() === item.id.toLowerCase())) {
+      return res.status(409).json({ error: "Rental ID already exists" });
+    }
+
+    if (fileRentals.some((existing) => existing.agreementNumber.toLowerCase() === item.agreementNumber.toLowerCase())) {
+      return res.status(409).json({ error: "Agreement number already exists" });
+    }
+
+    const nextRentals = [...fileRentals, item];
+    await writeRentalsFile(nextRentals);
+    res.status(201).json({ item, rentals: nextRentals });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to save rental", detail: error.message });
+  }
+});
+
+app.get("/api/admin/rentals/:rentalId", async (req, res) => {
+  try {
+    const fileRentals = await readRentalsFile();
+    const rental = byId(fileRentals, req.params.rentalId);
+    return rental ? res.json(rental) : notFound(res, "Rental");
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read rental", detail: error.message });
+  }
+});
+
+app.put("/api/admin/rentals/:rentalId", async (req, res) => {
+  try {
+    const fileRentals = await readRentalsFile();
+    const index = fileRentals.findIndex((item) => item.id === req.params.rentalId);
+    if (index < 0) return notFound(res, "Rental");
+
+    const item = normalizeRental({ ...fileRentals[index], ...req.body, id: req.params.rentalId, createdAt: fileRentals[index].createdAt }, fileRentals);
+    const nextRentals = [...fileRentals];
+    nextRentals[index] = item;
+    await writeRentalsFile(nextRentals);
+    res.json({ item, rentals: nextRentals });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to update rental", detail: error.message });
+  }
+});
+
+app.delete("/api/admin/rentals/:rentalId", async (req, res) => {
+  try {
+    const fileRentals = await readRentalsFile();
+    const nextRentals = fileRentals.filter((item) => item.id !== req.params.rentalId);
+    if (nextRentals.length === fileRentals.length) return notFound(res, "Rental");
+    await writeRentalsFile(nextRentals);
+    res.json({ deletedId: req.params.rentalId, rentals: nextRentals });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to delete rental", detail: error.message });
+  }
+});
+
+const rentalStatusActions = {
+  activate: "Active",
+  complete: "Closed",
+  cancel: "Cancelled"
+};
+
+Object.entries(rentalStatusActions).forEach(([action, status]) => {
+  app.post(`/api/admin/rentals/:rentalId/${action}`, async (req, res) => {
+    try {
+      const fileRentals = await readRentalsFile();
+      const index = fileRentals.findIndex((item) => item.id === req.params.rentalId);
+      if (index < 0) return notFound(res, "Rental");
+
+      const item = { ...fileRentals[index], status };
+      const nextRentals = [...fileRentals];
+      nextRentals[index] = item;
+      await writeRentalsFile(nextRentals);
+      res.json({ rentalId: req.params.rentalId, action, status, item, rentals: nextRentals });
+    } catch (error) {
+      res.status(500).json({ error: `Unable to ${action} rental`, detail: error.message });
+    }
+  });
 });
 
 app.get("/api/admin/container-sizes", (_req, res) => res.json(containerSizes));
@@ -381,13 +573,138 @@ app.put("/api/admin/dispatch/jobs/:jobId", (req, res) => res.json({ id: req.para
   app.post(`/api/admin/dispatch/jobs/:jobId/${action}`, (req, res) => res.json({ jobId: req.params.jobId, action, payload: req.body, ok: true }));
 });
 
-app.get("/api/admin/invoices", (_req, res) => res.json(invoices));
-app.post("/api/admin/invoices", (req, res) => res.status(201).json({ id: `inv-stub-${Date.now()}`, status: "draft", ...req.body }));
-app.get("/api/admin/invoices/:invoiceId", (req, res) => {
-  const invoice = byId(invoices, req.params.invoiceId);
-  return invoice ? res.json(invoice) : notFound(res, "Invoice");
+app.get("/api/admin/invoices", async (_req, res) => {
+  try {
+    res.json(await readInvoicesFile());
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read invoices file", detail: error.message });
+  }
 });
-app.post("/api/admin/invoices/:invoiceId/send", (req, res) => res.json({ invoiceId: req.params.invoiceId, status: "sent", recipient: req.body.email ?? null }));
+
+app.post("/api/admin/invoices", async (req, res) => {
+  try {
+    const fileInvoices = await readInvoicesFile();
+    const item = normalizeInvoice(req.body);
+    if (fileInvoices.some((existing) => existing.id.toLowerCase() === item.id.toLowerCase())) {
+      return res.status(409).json({ error: "Invoice ID already exists" });
+    }
+    const nextInvoices = [...fileInvoices, item];
+    await writeInvoicesFile(nextInvoices);
+    res.status(201).json({ item, invoices: nextInvoices });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to save invoice", detail: error.message });
+  }
+});
+
+app.get("/api/admin/invoices/:invoiceId", async (req, res) => {
+  try {
+    const fileInvoices = await readInvoicesFile();
+    const invoice = byId(fileInvoices, req.params.invoiceId);
+    return invoice ? res.json(invoice) : notFound(res, "Invoice");
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read invoice", detail: error.message });
+  }
+});
+
+app.put("/api/admin/invoices/:invoiceId", async (req, res) => {
+  try {
+    const fileInvoices = await readInvoicesFile();
+    const index = fileInvoices.findIndex((item) => item.id === req.params.invoiceId);
+    if (index < 0) return notFound(res, "Invoice");
+
+    const item = normalizeInvoice({ ...fileInvoices[index], ...req.body, id: req.params.invoiceId });
+    const nextInvoices = [...fileInvoices];
+    nextInvoices[index] = item;
+    await writeInvoicesFile(nextInvoices);
+    res.json({ item, invoices: nextInvoices });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to update invoice", detail: error.message });
+  }
+});
+
+app.post("/api/admin/invoices/:invoiceId/mark-paid", async (req, res) => {
+  try {
+    const fileInvoices = await readInvoicesFile();
+    const index = fileInvoices.findIndex((item) => item.id === req.params.invoiceId);
+    if (index < 0) return notFound(res, "Invoice");
+
+    const current = fileInvoices[index];
+    if (current.status === "Paid") {
+      return res.status(409).json({ error: "Invoice is already paid" });
+    }
+
+    const item = normalizeInvoice({
+      ...current,
+      previousAmount: current.amount,
+      previousAge: current.age,
+      previousStatus: current.status,
+      status: "Paid",
+      amount: 0,
+      age: "Paid just now",
+      paymentNote: String(req.body?.paymentNote || "").trim(),
+      paidAt: new Date().toISOString()
+    });
+
+    const nextInvoices = [...fileInvoices];
+    nextInvoices[index] = item;
+    await writeInvoicesFile(nextInvoices);
+    res.json({ item, invoices: nextInvoices });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to mark invoice paid", detail: error.message });
+  }
+});
+
+app.post("/api/admin/invoices/:invoiceId/undo-paid", async (req, res) => {
+  try {
+    const fileInvoices = await readInvoicesFile();
+    const index = fileInvoices.findIndex((item) => item.id === req.params.invoiceId);
+    if (index < 0) return notFound(res, "Invoice");
+
+    const current = fileInvoices[index];
+    if (current.status !== "Paid" || current.previousAmount == null) {
+      return res.status(409).json({ error: "Invoice cannot be restored" });
+    }
+
+    const item = normalizeInvoice({
+      ...current,
+      status: current.previousStatus || "Open",
+      amount: current.previousAmount,
+      age: current.previousAge || "",
+      paymentNote: "",
+      paidAt: null,
+      previousAmount: null,
+      previousAge: null,
+      previousStatus: null
+    });
+
+    const nextInvoices = [...fileInvoices];
+    nextInvoices[index] = item;
+    await writeInvoicesFile(nextInvoices);
+    res.json({ item, invoices: nextInvoices });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to undo payment", detail: error.message });
+  }
+});
+
+app.post("/api/admin/invoices/:invoiceId/send", async (req, res) => {
+  try {
+    const fileInvoices = await readInvoicesFile();
+    const index = fileInvoices.findIndex((item) => item.id === req.params.invoiceId);
+    if (index < 0) return notFound(res, "Invoice");
+
+    const item = normalizeInvoice({
+      ...fileInvoices[index],
+      age: "Reminder sent just now",
+      status: fileInvoices[index].status === "Open" ? "Sent" : fileInvoices[index].status
+    });
+    const nextInvoices = [...fileInvoices];
+    nextInvoices[index] = item;
+    await writeInvoicesFile(nextInvoices);
+    res.json({ invoiceId: req.params.invoiceId, status: "sent", recipient: req.body.email ?? null, item, invoices: nextInvoices });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to send invoice reminder", detail: error.message });
+  }
+});
 
 app.get("/api/admin/payments", (_req, res) => res.json(payments));
 app.post("/api/admin/payments", (req, res) => res.status(201).json({ id: `pay-stub-${Date.now()}`, status: "recorded", ...req.body }));
@@ -446,6 +763,69 @@ app.get("/api/admin/maintenance", (_req, res) => res.json(maintenanceRecords));
 app.post("/api/admin/maintenance", (req, res) => res.status(201).json({ id: `maint-stub-${Date.now()}`, status: "open", ...req.body }));
 app.put("/api/admin/maintenance/:recordId", (req, res) => res.json({ id: req.params.recordId, ...req.body }));
 app.post("/api/admin/maintenance/:recordId/close", (req, res) => res.json({ id: req.params.recordId, status: "closed", resolution: req.body.resolution ?? null }));
+
+app.get("/api/admin/inspections", async (_req, res) => {
+  try {
+    res.json(await readInspectionsFile());
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read inspections file", detail: error.message });
+  }
+});
+
+app.get("/api/admin/inspections/:inspectionId", async (req, res) => {
+  try {
+    const fileInspections = await readInspectionsFile();
+    const inspection = byId(fileInspections, req.params.inspectionId);
+    return inspection ? res.json(inspection) : notFound(res, "Inspection");
+  } catch (error) {
+    res.status(500).json({ error: "Unable to read inspection", detail: error.message });
+  }
+});
+
+app.put("/api/admin/inspections/:inspectionId", async (req, res) => {
+  try {
+    const fileInspections = await readInspectionsFile();
+    const index = fileInspections.findIndex((item) => item.id === req.params.inspectionId);
+    if (index < 0) return notFound(res, "Inspection");
+
+    const item = normalizeInspection({ ...fileInspections[index], ...req.body, id: req.params.inspectionId });
+    if (item.status !== "Complete" && (item.checkedItems.length > 0 || item.photosAdded || item.signed)) {
+      item.status = "In progress";
+    }
+
+    const nextInspections = [...fileInspections];
+    nextInspections[index] = item;
+    await writeInspectionsFile(nextInspections);
+    res.json({ item, inspections: nextInspections });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to update inspection", detail: error.message });
+  }
+});
+
+app.post("/api/admin/inspections/:inspectionId/complete", async (req, res) => {
+  try {
+    const fileInspections = await readInspectionsFile();
+    const index = fileInspections.findIndex((item) => item.id === req.params.inspectionId);
+    if (index < 0) return notFound(res, "Inspection");
+
+    const current = fileInspections[index];
+    const item = normalizeInspection({
+      ...current,
+      ...req.body,
+      id: req.params.inspectionId,
+      status: "Complete",
+      completionNote: String(req.body?.completionNote ?? current.completionNote ?? "").trim(),
+      completedAt: new Date().toISOString()
+    });
+
+    const nextInspections = [...fileInspections];
+    nextInspections[index] = item;
+    await writeInspectionsFile(nextInspections);
+    res.json({ item, inspections: nextInspections });
+  } catch (error) {
+    res.status(500).json({ error: "Unable to complete inspection", detail: error.message });
+  }
+});
 
 app.get("/api/admin/work-orders-file", async (_req, res) => {
   try {

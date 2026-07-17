@@ -30,7 +30,7 @@ const nav = [
   { label: "Dashboard", href: "/admin", icon: Home },
   { label: "Leads", href: "/admin/leads", icon: ClipboardList },
   { label: "Customers", href: "/admin/customers", icon: Users },
-  { label: "New Rental", href: "/admin/rentals/new", icon: ClipboardCheck },
+  { label: "Rentals", href: "/admin/rentals", icon: ClipboardCheck },
   { label: "Dispatch", href: "/admin/dispatch", icon: Route },
   { label: "Invoices", href: "/admin/invoices", icon: CreditCard },
   { label: "Inventory", href: "/admin/inventory", icon: Container },

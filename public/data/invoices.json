@@ -1,0 +1,43 @@
+[
+  {
+    "id": "INV-2307",
+    "customer": "Mallery Construction",
+    "due": "2026-07-15",
+    "amount": 642,
+    "status": "Open",
+    "age": "Due tomorrow",
+    "paymentNote": ""
+  },
+  {
+    "id": "INV-2311",
+    "customer": "Lassen High School",
+    "due": "2026-07-18",
+    "amount": 225,
+    "status": "Sent",
+    "age": "Due in 4 days",
+    "paymentNote": "",
+    "paidAt": null,
+    "previousAmount": null,
+    "previousAge": null,
+    "previousStatus": null
+  },
+  {
+    "id": "INV-2298",
+    "customer": "Modoc County",
+    "due": "2026-07-01",
+    "amount": 390,
+    "status": "Past due",
+    "age": "13 days late",
+    "paymentNote": ""
+  },
+  {
+    "id": "INV-2291",
+    "customer": "Plumas Ag Supply",
+    "due": "2026-06-28",
+    "amount": 0,
+    "status": "Paid",
+    "age": "Paid Jul 2",
+    "paymentNote": "Card payment received at office.",
+    "paidAt": "2026-07-02T16:00:00.000Z"
+  }
+]

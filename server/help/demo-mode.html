@@ -15,20 +15,31 @@
       <section class="hero">
         <p class="eyebrow">Prototype notes</p>
         <h1>Demo mode guide</h1>
-        <p class="lede">The prototype is intentionally mixed: React pages, Express API stubs, static JSON files, static help pages, and browser-stored demo state.</p>
+        <p class="lede">The prototype is intentionally mixed: React pages, Express API stubs, static JSON files used as a local database, static help pages, and browser-stored demo state.</p>
       </section>
       <article class="article">
         <section>
           <h2>What is real in the demo</h2>
           <ol class="steps">
-            <li>Express serves API stubs, PDF contract previews, file-backed inventory, trucks, work orders, and this help section.</li>
-            <li>React handles the public site, portal, admin backend, and interactive demo workflows.</li>
-            <li>Static JSON files in <code>public/data</code> seed inventory, truck, and work-order screens.</li>
+            <li>Express serves API routes, PDF contract previews, file-backed admin modules, and this help section.</li>
+            <li>React handles the public site, portal, admin backend, and interactive workflows.</li>
+            <li>Static JSON files in <code>public/data</code> act as temporary local storage for inventory, trucks, work orders, rentals, invoices, and inspections.</li>
             <li>Browser local storage keeps test login state and submitted quote leads.</li>
-            <li>Payments, email sending, and accounting export are visible demo states, not production integrations.</li>
+            <li>Card processors, outbound email, and accounting export remain visible demo states, not production integrations.</li>
           </ol>
         </section>
-        <p class="note">For local development, Vite proxies <code>/api</code> and <code>/help</code> to Express so the app and help pages share the same localhost origin.</p>
+        <section>
+          <h2>File-backed admin modules</h2>
+          <ol class="steps">
+            <li><code>container-inventory.json</code> via inventory create modal and <code>/api/admin/container-inventory-file</code>.</li>
+            <li><code>trucks.json</code> via trucks create modal and <code>/api/admin/trucks-file</code>.</li>
+            <li><code>work-orders.json</code> via dashboard work-order modal and <code>/api/admin/work-orders-file</code>.</li>
+            <li><code>rentals.json</code> via Rentals New rental modal and <code>/api/admin/rentals</code>.</li>
+            <li><code>invoices.json</code> via Mark paid with payment note and <code>/api/admin/invoices/:id/mark-paid</code>.</li>
+            <li><code>inspections.json</code> via Inspection master-detail checklist and <code>/api/admin/inspections</code>.</li>
+          </ol>
+        </section>
+        <p class="note">For local development, Vite proxies <code>/api</code> and <code>/help</code> to Express so the app and help pages share the same localhost origin. Restart or refresh after JSON writes if a screen still shows cached seed data.</p>
       </article>
       <footer class="footer"><a href="/help">Back to Help Center</a></footer>
     </main>

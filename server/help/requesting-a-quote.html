@@ -10,7 +10,7 @@
     <main class="shell">
       <header class="topbar">
         <a class="brand" href="/help">Lassen Rents Help</a>
-        <nav><a href="/request-quote">Quote form</a><a href="/admin/leads">Admin leads</a></nav>
+        <nav><a href="/request-quote">Quote form</a><a href="/admin/leads">Admin leads</a><a href="/admin/rentals">Rentals</a></nav>
       </header>
       <section class="hero">
         <p class="eyebrow">Public website</p>
@@ -25,10 +25,10 @@
             <li>Select a container size and interest areas such as Containers, Delivery, Modifications, or Trucking.</li>
             <li>Submit the form to create a browser-stored demo lead.</li>
             <li>Open the admin lead queue and review the new request.</li>
-            <li>Convert the lead into the rental wizard when the availability match looks good.</li>
+            <li>Choose Convert to rental to open the Rentals New rental modal, prefilled from the lead. Save writes the agreement to <code>public/data/rentals.json</code>.</li>
           </ol>
         </section>
-        <p class="note">Demo note: quote submissions are stored in browser local storage so they appear immediately in the admin lead queue on the same machine.</p>
+        <p class="note">Demo note: quote submissions are stored in browser local storage so they appear immediately in the admin lead queue on the same machine. Created rentals persist through the Express rentals API.</p>
       </article>
       <footer class="footer"><a href="/help">Back to Help Center</a></footer>
     </main>

@@ -10,25 +10,44 @@
     <main class="shell">
       <header class="topbar">
         <a class="brand" href="/help">Lassen Rents Help</a>
-        <nav><a href="/admin/login">Admin login</a><a href="/admin/activity">Activity</a></nav>
+        <nav><a href="/admin/login">Admin login</a><a href="/admin/rentals">Rentals</a><a href="/admin/invoices">Invoices</a></nav>
       </header>
       <section class="hero">
         <p class="eyebrow">Admin backend</p>
         <h1>Admin operations overview</h1>
-        <p class="lede">The backend prototype ties together the office work that happens before, during, and after a rental.</p>
+        <p class="lede">The backend prototype ties together the office work that happens before, during, and after a rental. Several modules now persist through Express into local JSON files.</p>
       </section>
       <article class="article">
         <section>
           <h2>Primary modules</h2>
           <ol class="steps">
-            <li>Leads: review quote submissions and match them to inventory.</li>
+            <li>Leads: review quote submissions and match them to inventory. Convert to rental opens the Rentals page with a prefilled New rental modal.</li>
             <li>Customers: view account details, balances, rentals, notes, and contact actions.</li>
-            <li>New Rental: convert a lead into terms, agreement, invoice, and delivery job.</li>
-            <li>Inventory and Trucks: maintain units and dispatch capability.</li>
-            <li>Invoices, Activity, Calendar, and Tax Export: keep office work visible.</li>
+            <li>Rentals: manage agreement records from a list. Use New rental to capture customer, container, dates, rates, and fees. Saves through <code>POST /api/admin/rentals</code> into <code>public/data/rentals.json</code>.</li>
+            <li>Inventory, Trucks, and Work orders: maintain units and dispatch capability with file-backed create flows.</li>
+            <li>Invoices: record payments with Mark paid. Confirm in the modal and optionally add a payment note. Notes and paid status persist in <code>public/data/invoices.json</code>.</li>
+            <li>Inspection, Dispatch, Activity, Calendar, and Tax Export: keep field and office work visible.</li>
           </ol>
         </section>
-        <p class="note">Demo note: login uses the test admin button and stores authentication in browser local storage.</p>
+        <section>
+          <h2>New rental walkthrough</h2>
+          <ol class="steps">
+            <li>Open <a href="/admin/rentals">Rentals</a> or click New rental from the dashboard.</li>
+            <li>Fill customer, site, container unit (from available inventory), dates, and rates.</li>
+            <li>Save rental to append the agreement to the local rentals JSON file.</li>
+            <li>From Leads, Convert to rental prefills the same modal from the quote lead.</li>
+          </ol>
+        </section>
+        <section>
+          <h2>Mark invoice paid</h2>
+          <ol class="steps">
+            <li>Open <a href="/admin/invoices">Invoices</a> and choose Mark paid on an open invoice.</li>
+            <li>Add an optional payment note such as check number, ACH confirmation, or cash received.</li>
+            <li>Confirm mark paid to zero the balance, set status to Paid, and store the note.</li>
+            <li>Use Undo payment when you need to restore the prior open balance in the demo.</li>
+          </ol>
+        </section>
+        <p class="note">Demo note: login uses the test admin button and stores authentication in browser local storage. File-backed modules write under <code>public/data</code> through the Express API stub.</p>
       </article>
       <footer class="footer"><a href="/help">Back to Help Center</a></footer>
     </main>

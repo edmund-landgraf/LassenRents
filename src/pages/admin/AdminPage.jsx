@@ -457,7 +457,7 @@ export function AdminPage() {
             Dashboard-level overview for rentals, dispatch, maintenance, and receivables. Deeper fleet tools live on their own backend pages.
           </p>
         </div>
-        <Button onClick={() => window.location.assign("/admin/rentals/new")}>
+        <Button onClick={() => window.location.assign("/admin/rentals?new=1")}>
           <Users className="h-4 w-4" />
           New rental
         </Button>

@@ -8,7 +8,7 @@ import { AdminInventoryPage } from "@/pages/admin/AdminInventoryPage";
 import { AdminInvoicesPage } from "@/pages/admin/AdminInvoicesPage";
 import { AdminLeadsPage } from "@/pages/admin/AdminLeadsPage";
 import { AdminLoginPage } from "@/pages/admin/AdminLoginPage";
-import { AdminRentalWizardPage } from "@/pages/admin/AdminRentalWizardPage";
+import { AdminRentalsPage } from "@/pages/admin/AdminRentalsPage";
 import { AdminTaxExportPage } from "@/pages/admin/AdminTaxExportPage";
 import { AdminTruckPage } from "@/pages/admin/AdminTruckPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
@@ -44,7 +44,7 @@ export default function App() {
   if (path === "/admin") return <AdminPage />;
   if (path === "/admin/leads") return <AdminLeadsPage />;
   if (path === "/admin/customers") return <AdminCustomersPage />;
-  if (path === "/admin/rentals/new") return <AdminRentalWizardPage />;
+  if (path === "/admin/rentals" || path === "/admin/rentals/new") return <AdminRentalsPage />;
   if (path === "/admin/dispatch") return <AdminDispatchPage />;
   if (path === "/admin/invoices") return <AdminInvoicesPage />;
   if (path === "/admin/inspection") return <AdminInspectionPage />;
