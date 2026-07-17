@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { containerSizes, legacyAssets } from "@/data/siteData";
+import { containerSizes } from "@/data/siteData";
 import { Badge, Card } from "@/components/ui";
 import { saveContactIntent } from "@/lib/contactIntent";
 import { PublicLayout } from "./PublicLayout";
@@ -8,19 +8,23 @@ import { TestimonialsSection } from "./TestimonialsSection";
 export function ContainersPage() {
   return (
     <PublicLayout>
-      <section className="border-b border-border bg-hero py-14">
-        <div className="container grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-primary">Containers</p>
-            <h1 className="mt-2 text-4xl font-bold">Sales and month-to-month rentals</h1>
-            <p className="mt-4 text-muted-foreground">
-              As the largest container dealer in Northeastern California, Lassen Rents can find the perfect container for your needs at a great price.
-            </p>
-            <p className="mt-3 text-muted-foreground">
-              Choose from compact storage, standard 20 and 40 foot containers, high-cube models with extra headroom, and refrigerated storage when cold space is needed.
+      <section className="relative isolate min-h-[420px] overflow-hidden">
+        <img
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          src="/assets/container-sizes/fortyfoot.png"
+          alt="40 foot storage container"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/20" />
+        <div className="container relative z-10 flex min-h-[420px] flex-col justify-end py-12 lg:justify-center">
+          <div className="max-w-xl text-white">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/70">Containers</p>
+            <h1 className="font-display mt-3 text-4xl leading-none tracking-wide md:text-5xl lg:text-6xl">
+              Sales and month-to-month rentals
+            </h1>
+            <p className="mt-5 max-w-md text-lg leading-8 text-white/85">
+              20 ft, 40 ft, high-cube, and refrigerated units for jobsites, retail, schools, and farms across Northeastern California.
             </p>
           </div>
-          <img className="h-72 w-full rounded-md border-4 border-card object-cover shadow-soft" src={legacyAssets.refrigerated} alt="Refrigerated storage container" />
         </div>
       </section>
 

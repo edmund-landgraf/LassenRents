@@ -1,13 +1,40 @@
 import { CalendarClock, Container, PackageCheck, Truck, Wrench } from "lucide-react";
 
 export const legacyAssets = {
-  header: "https://lassenrents.com/wp-content/uploads/2013/10/header.jpg",
+  header: "/assets/trucking/truckingbig.png",
   refrigerated: "https://lassenrents.com/wp-content/uploads/2018/05/refrigeratedcontainer960.png",
   delivery: "/assets/delivery/deliveryblock.jpg",
   trucking: "/assets/trucking/truckingtop.png",
   shelving: "https://lassenrents.com/wp-content/uploads/2013/10/shelving.jpg",
   modifications: "/assets/modifications/office.jpg"
 };
+
+export const homeProofShots = [
+  {
+    src: "/assets/delivery/toughdelivery.png",
+    alt: "PinPoint tilt-trailer delivery on a tight site",
+    label: "PinPoint delivery",
+    href: "/delivery"
+  },
+  {
+    src: "/assets/trucking/truckingtop.png",
+    alt: "Lassen Rents trucking and container haul",
+    label: "Trucking",
+    href: "/trucking"
+  },
+  {
+    src: "/assets/container-sizes/twentyfoot.png",
+    alt: "20 foot storage container",
+    label: "Containers",
+    href: "/containers"
+  },
+  {
+    src: "/assets/modifications/office.jpg",
+    alt: "Modified container office interior",
+    label: "Modifications",
+    href: "/options"
+  }
+];
 
 export const deliveryAssets = {
   videoId: "Q9InSkMyBMM",
@@ -322,6 +349,14 @@ export const operations = {
       truck: "T-HC-03",
       tone: "default"
     }
+  ],
+  monthlyRevenue: [
+    { month: "Feb", income: 15240, expenses: 4120 },
+    { month: "Mar", income: 16180, expenses: 3980 },
+    { month: "Apr", income: 17420, expenses: 4510 },
+    { month: "May", income: 16890, expenses: 4230 },
+    { month: "Jun", income: 17960, expenses: 4675 },
+    { month: "Jul", income: 18450, expenses: 5705 }
   ],
   taxExport: {
     period: "2026 Q3",

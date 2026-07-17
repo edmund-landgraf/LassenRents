@@ -4,23 +4,24 @@
 
 @layer base {
   :root {
-    --background: 43 31% 92%;
-    --foreground: 188 31% 12%;
-    --card: 46 41% 97%;
-    --card-foreground: 184 28% 12%;
-    --primary: 176 69% 22%;
+    /* Steel yard: cool gravel field, container green accent, no cream wash */
+    --background: 210 12% 96%;
+    --foreground: 210 24% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 24% 10%;
+    --primary: 162 72% 22%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 38 28% 84%;
-    --secondary-foreground: 184 34% 16%;
-    --muted: 40 24% 86%;
-    --muted-foreground: 190 12% 34%;
-    --accent: 31 91% 48%;
-    --accent-foreground: 31 80% 12%;
+    --secondary: 210 14% 90%;
+    --secondary-foreground: 210 22% 16%;
+    --muted: 210 12% 92%;
+    --muted-foreground: 210 10% 38%;
+    --accent: 162 45% 36%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 70% 46%;
     --destructive-foreground: 0 0% 100%;
-    --border: 38 24% 76%;
-    --input: 38 24% 76%;
-    --ring: 173 72% 26%;
+    --border: 210 12% 82%;
+    --input: 210 12% 82%;
+    --ring: 162 72% 22%;
   }
 
   * {
@@ -34,28 +35,23 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
     overflow-x: clip;
     background:
-      linear-gradient(90deg, rgba(18, 88, 83, 0.04) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(88, 70, 48, 0.035) 1px, transparent 1px),
-      radial-gradient(circle at 12% 0%, rgba(225, 111, 42, 0.12), transparent 26rem),
-      linear-gradient(135deg, hsl(var(--background)), #fbf4e6 48%, #e9f0e7);
-    background-size: 38px 38px, 38px 38px, auto, auto;
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(20, 90, 72, 0.08), transparent 55%),
+      linear-gradient(180deg, hsl(210 14% 97%) 0%, hsl(var(--background)) 40%, hsl(210 10% 94%) 100%);
   }
 
   #root {
     max-width: 100%;
     overflow-x: clip;
   }
-}
 
-.bg-hero {
-  background:
-    linear-gradient(116deg, rgba(248, 242, 228, 0.96), rgba(232, 240, 233, 0.9)),
-    repeating-linear-gradient(90deg, rgba(18, 95, 88, 0.08) 0 1px, transparent 1px 22px),
-    repeating-linear-gradient(0deg, transparent 0 21px, rgba(92, 73, 47, 0.06) 21px 22px),
-    radial-gradient(circle at top right, rgba(231, 112, 39, 0.3), transparent 34%);
+  .font-display {
+    font-family: Oswald, ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
 }
 
 @layer components {
@@ -63,40 +59,12 @@
     position: relative;
   }
 
-  .yard-shell::before {
-    background: linear-gradient(90deg, hsl(var(--primary)), rgba(18, 88, 83, 0.68));
-    content: "";
-    height: 3px;
-    inset: 0 0 auto;
-    position: fixed;
-    z-index: 60;
-  }
-
   .yard-header {
-    background:
-      linear-gradient(180deg, rgba(255, 252, 244, 0.96), rgba(247, 240, 225, 0.9)),
-      repeating-linear-gradient(90deg, rgba(19, 92, 86, 0.055) 0 1px, transparent 1px 18px);
+    background: rgba(255, 255, 255, 0.92);
   }
 
   .container-badge {
-    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.22), 0 8px 18px rgba(15, 78, 74, 0.16);
-    position: relative;
-  }
-
-  .container-badge::after {
-    background: rgba(255, 255, 255, 0.28);
-    content: "";
-    height: 1px;
-    left: 8px;
-    position: absolute;
-    right: 8px;
-    top: 12px;
-  }
-
-  .yard-card {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 253, 248, 0.96)),
-      repeating-linear-gradient(90deg, rgba(22, 93, 86, 0.045) 0 1px, transparent 1px 18px);
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.18);
   }
 
   .freight-card {
@@ -109,7 +77,7 @@
     content: "";
     inset: 0 auto 0 0;
     position: absolute;
-    width: 5px;
+    width: 4px;
   }
 
   .bolt-strip {
@@ -117,25 +85,94 @@
   }
 
   .field-surface {
+    background: hsl(var(--muted));
+  }
+
+  .bg-hero {
+    background: linear-gradient(160deg, hsl(210 18% 94%) 0%, hsl(162 20% 92%) 100%);
+  }
+
+  /* Full-bleed photographic hero */
+  .hero-bleed {
+    min-height: min(92vh, 720px);
+  }
+
+  .hero-bleed__media {
+    animation: hero-ken 28s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .hero-bleed__scrim {
     background:
-      linear-gradient(180deg, rgba(255, 253, 248, 0.95), rgba(247, 242, 230, 0.9)),
-      repeating-linear-gradient(90deg, rgba(18, 95, 88, 0.035) 0 1px, transparent 1px 16px);
+      linear-gradient(105deg, rgba(8, 16, 20, 0.82) 0%, rgba(8, 16, 20, 0.55) 48%, rgba(8, 16, 20, 0.28) 100%),
+      linear-gradient(0deg, rgba(8, 16, 20, 0.55) 0%, transparent 45%);
+  }
+
+  .reveal-up {
+    animation: reveal-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .reveal-up-delay {
+    animation: reveal-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  }
+
+  .reveal-up-delay-2 {
+    animation: reveal-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+  }
+
+  .proof-strip img {
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .proof-strip a:hover img {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes hero-ken {
+  from {
+    transform: scale(1.05) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bleed__media,
+  .reveal-up,
+  .reveal-up-delay,
+  .reveal-up-delay-2,
+  .proof-strip img {
+    animation: none !important;
+    transition: none !important;
   }
 }
 
 input,
 select,
 textarea {
-  background-color: rgba(255, 253, 248, 0.88);
+  background-color: hsl(0 0% 100%);
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  box-shadow: 0 0 0 3px rgba(19, 111, 104, 0.14);
+  box-shadow: 0 0 0 3px rgba(20, 110, 88, 0.16);
 }
 
 ::selection {
-  background: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
 }

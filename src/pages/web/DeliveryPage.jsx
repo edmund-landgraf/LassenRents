@@ -50,20 +50,25 @@ const mediaCards = [
 export function DeliveryPage() {
   return (
     <PublicLayout>
-      <section className="border-b border-border bg-hero">
-        <div className="container grid gap-10 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-primary">PinPoint Delivery</p>
-            <h1 className="mt-3 max-w-xl text-4xl font-bold leading-tight text-foreground md:text-5xl">
-              Put the container where the work actually happens
+      <section className="relative isolate min-h-[520px] overflow-hidden">
+        <img
+          className="absolute inset-0 h-full w-full object-cover"
+          src={deliveryAssets.toughDelivery}
+          alt="PinPoint tilt-trailer delivery placing a container"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25" />
+        <div className="container relative z-10 flex min-h-[520px] flex-col justify-end py-14 lg:justify-center">
+          <div className="max-w-xl text-white">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/70">PinPoint Delivery</p>
+            <h1 className="font-display mt-3 text-4xl leading-none tracking-wide md:text-5xl lg:text-6xl">
+              Place it where the work happens
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-              Lassen Rents can transport and install storage containers in small spaces, helping customers get secure
-              24/7 storage without wasting valuable site area.
+            <p className="mt-5 max-w-md text-lg leading-8 text-white/85">
+              Transport and install storage containers in tight yards, alleys, and jobsites without wasting usable space.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                className="bolt-strip inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-bold text-primary-foreground transition hover:bg-primary/90"
+                className="bolt-strip inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
                 href="/request-quote"
                 onClick={() => saveContactIntent("Delivery")}
               >
@@ -71,17 +76,21 @@ export function DeliveryPage() {
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-border bg-white px-5 text-sm font-semibold text-foreground transition hover:bg-muted"
-                href="tel:5302573865"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-white/35 bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/18"
+                href="tel:15302573865"
               >
                 <Phone className="h-4 w-4" />
                 530.257.3865
               </a>
             </div>
           </div>
+        </div>
+      </section>
 
-          <Card className="overflow-hidden bg-slate-950 p-3 ring-4 ring-card/70">
-            <div className="aspect-video overflow-hidden rounded-md bg-black">
+      <section className="border-b border-border bg-card">
+        <div className="container py-12">
+          <div className="mx-auto max-w-4xl overflow-hidden bg-black">
+            <div className="aspect-video">
               <iframe
                 className="h-full w-full"
                 src={deliveryAssets.videoUrl}
@@ -92,11 +101,8 @@ export function DeliveryPage() {
                 referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
-            <div className="flex items-center justify-between gap-4 px-2 py-3 text-sm text-slate-300">
-              <span>Watch the placement system in action</span>
-              <span className="rounded-sm bg-white/10 px-2 py-1 text-xs font-semibold text-white">Video</span>
-            </div>
-          </Card>
+          </div>
+          <p className="mx-auto mt-4 max-w-4xl text-sm text-muted-foreground">Watch the placement system in action.</p>
         </div>
       </section>
 

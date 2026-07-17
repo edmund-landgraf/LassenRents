@@ -1,60 +1,68 @@
-import { ArrowRight, Check, CreditCard, ShieldCheck } from "lucide-react";
-import { Badge, Card } from "@/components/ui";
-import { legacyAssets } from "@/data/siteData";
+import { ArrowRight, Phone } from "lucide-react";
+import { homeProofShots, legacyAssets } from "@/data/siteData";
 import { saveContactIntent } from "@/lib/contactIntent";
 import { PublicLayout } from "./PublicLayout";
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-border bg-hero">
-      <div className="pointer-events-none absolute right-0 top-14 hidden h-24 w-52 border-y-4 border-primary/15 opacity-80 lg:block" />
-      <div className="pointer-events-none absolute bottom-10 left-0 hidden h-16 w-40 border-y-4 border-primary/15 bg-primary/5 lg:block" />
-      <div className="container grid min-h-[620px] items-center gap-10 py-12 lg:grid-cols-[1.02fr_.98fr]">
-        <div className="max-w-2xl">
-          <Badge tone="success">Serving Lassen, Plumas, and Modoc Counties</Badge>
-          <h1 className="mt-5 max-w-xl text-4xl font-black leading-tight text-foreground sm:text-5xl lg:text-6xl">Lassen Rents</h1>
-          <p className="mt-5 text-xl leading-8 text-muted-foreground">
-            Onsite storage container rental, sales, pinpoint delivery, modifications, and trucking from a locally owned Susanville operator.
+    <section className="hero-bleed relative isolate overflow-hidden">
+      <img
+        className="hero-bleed__media absolute inset-0 h-full w-full object-cover"
+        src={legacyAssets.header}
+        alt="Lassen Rents trucking and container yard"
+      />
+      <div className="hero-bleed__scrim absolute inset-0" />
+
+      <div className="container relative z-10 flex min-h-[inherit] flex-col justify-end pb-14 pt-28 sm:pb-16 sm:pt-32 lg:justify-center lg:pb-20 lg:pt-24">
+        <div className="max-w-xl text-white">
+          <p className="reveal-up font-display text-5xl leading-none tracking-wide sm:text-6xl lg:text-7xl">Lassen Rents</p>
+          <p className="reveal-up-delay mt-5 max-w-md text-lg leading-relaxed text-white/85 sm:text-xl">
+            Onsite container rental and sales with PinPoint delivery across Lassen, Plumas, and Modoc Counties.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="reveal-up-delay-2 mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href="/request-quote"
               onClick={() => saveContactIntent("Containers")}
-              className="bolt-strip inline-flex h-12 items-center justify-center gap-2 rounded-md border border-primary/20 bg-primary px-5 text-sm font-bold text-primary-foreground shadow-sm transition hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="bolt-strip inline-flex h-12 items-center justify-center gap-2 rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg transition duration-300 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
             >
-              Request a container
+              Request a quote
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
-              href="/portal/login"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-border bg-background px-5 text-sm font-semibold text-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              href="tel:15302573865"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-white/35 bg-white/10 px-6 text-sm font-semibold text-white backdrop-blur-sm transition duration-300 hover:bg-white/18 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
             >
-              <CreditCard className="h-4 w-4" />
-              Client payment portal
+              <Phone className="h-4 w-4" />
+              530.257.3865
             </a>
           </div>
-          <div className="mt-8 grid gap-3 text-sm text-muted-foreground sm:grid-cols-3">
-            {["20' and 40' specialists", "Tilt trailer delivery", "No hidden costs"].map((item) => (
-              <div key={item} className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-emerald-700" />
-                {item}
-              </div>
-            ))}
-          </div>
         </div>
-        <div className="relative">
-          <div className="absolute -right-4 -top-4 h-24 w-24 rounded-sm border-8 border-primary/20" />
-          <div className="absolute -bottom-3 left-6 right-6 h-5 rounded-sm bg-primary/20 blur-sm" />
-          <img className="relative aspect-[4/3] w-full rounded-md border-4 border-card object-cover shadow-soft" src={legacyAssets.header} alt="Lassen Rents storage containers" />
-          <Card className="freight-card absolute bottom-4 left-4 right-4 border-primary/20 p-4 pl-6 sm:left-auto sm:w-72">
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="mt-1 h-5 w-5 text-emerald-700" />
-              <div>
-                <p className="font-semibold">Secure ground-level storage</p>
-                <p className="mt-1 text-sm text-muted-foreground">Delivered and set up for immediate temporary or permanent use.</p>
+      </div>
+    </section>
+  );
+}
+
+function ProofStrip() {
+  return (
+    <section className="proof-strip border-b border-border bg-card">
+      <div className="container py-14 sm:py-16">
+        <div className="max-w-2xl">
+          <h2 className="font-display text-3xl text-foreground sm:text-4xl">Built for the yard, not the brochure</h2>
+          <p className="mt-3 text-base leading-7 text-muted-foreground sm:text-lg">
+            Real delivery, trucking, and container work from a locally owned Susanville operator.
+          </p>
+        </div>
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {homeProofShots.map((shot) => (
+            <a key={shot.href} href={shot.href} className="group relative block overflow-hidden bg-muted">
+              <div className="aspect-[4/3] overflow-hidden">
+                <img className="h-full w-full object-cover" src={shot.src} alt={shot.alt} />
               </div>
-            </div>
-          </Card>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-4 pb-4 pt-12">
+                <span className="font-display text-lg tracking-wide text-white">{shot.label}</span>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </section>
@@ -64,31 +72,36 @@ function Hero() {
 function ServiceOverview() {
   const services = [
     { title: "Containers", href: "/containers", copy: "Month-to-month rentals, sales, 20 ft, 40 ft, high cube, and refrigerated units." },
-    { title: "Options", href: "/options", copy: "Shelving, pipe racks, custom brackets, office conversions, doors, windows, vents, and AC." },
+    { title: "Options", href: "/options", copy: "Shelving, pipe racks, office conversions, doors, windows, vents, and AC." },
     { title: "Delivery", href: "/delivery", copy: "PinPoint delivery and pickup for tight spaces with flat delivery and pickup fees." },
     { title: "Trucking", href: "/trucking", copy: "Container movement, relocation, hauling, and local trucking support." }
   ];
 
   return (
-    <section className="container py-16">
+    <section className="container py-14 sm:py-16">
       <div className="max-w-2xl">
-        <p className="text-sm font-semibold uppercase tracking-wide text-primary">Services</p>
-        <h2 className="mt-2 text-3xl font-bold">Pick the part of the operation you need</h2>
+        <h2 className="font-display text-3xl text-foreground sm:text-4xl">What we do</h2>
+        <p className="mt-3 text-base leading-7 text-muted-foreground sm:text-lg">
+          One local team for storage, setup, modifications, and the trucks that move them.
+        </p>
       </div>
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-10 divide-y divide-border border-y border-border">
         {services.map((service) => (
-          <a key={service.title} href={service.href}>
-            <Card className="freight-card h-full p-5 pl-7 transition hover:-translate-y-0.5 hover:border-primary/40">
-              <h3 className="font-semibold">{service.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">{service.copy}</p>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
-                View page
-                <ArrowRight className="h-4 w-4" />
+          <li key={service.title}>
+            <a
+              href={service.href}
+              className="group grid gap-2 py-6 transition sm:grid-cols-[10rem_1fr_auto] sm:items-center sm:gap-8"
+            >
+              <span className="font-display text-2xl tracking-wide text-foreground group-hover:text-primary">{service.title}</span>
+              <span className="text-base leading-7 text-muted-foreground">{service.copy}</span>
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                View
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </span>
-            </Card>
-          </a>
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
@@ -97,6 +110,7 @@ export function WebPage() {
   return (
     <PublicLayout>
       <Hero />
+      <ProofStrip />
       <ServiceOverview />
     </PublicLayout>
   );

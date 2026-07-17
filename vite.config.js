@@ -13,9 +13,11 @@ export default defineConfig({
     }
   },
   server: {
+    port: 5180,
+    strictPort: true,
     proxy: {
-      "/api": "http://localhost:5174",
-      "/help": "http://localhost:5174"
+      "/api": "http://localhost:5175",
+      "/help": "http://localhost:5175"
     }
   }
 });

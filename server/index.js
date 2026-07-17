@@ -19,7 +19,7 @@ import {
 } from "./data.js";
 
 const app = express();
-const port = process.env.PORT || 5174;
+const port = Number(process.env.PORT) || 5175;
 const inventoryFilePath = path.join(process.cwd(), "public", "data", "container-inventory.json");
 const workOrdersFilePath = path.join(process.cwd(), "public", "data", "work-orders.json");
 const trucksFilePath = path.join(process.cwd(), "public", "data", "trucks.json");
